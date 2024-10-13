@@ -1,30 +1,368 @@
 ---
-// src/pages/index.astro
-
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Card from "../components/Card.astro";
+import Component from "../components/Component.astro";
+import Experience from "../components/experience/index.astro";
+import { EXPERIENCE } from "../data/experience";
+import { SOCIALS } from "../data/socials";
+import { PROJECTS } from "../data/projects";
+import Layout from "../layouts/Layout.astro";
+import LocationIcon from "../components/icons/location.astro";
+import "../styles/global.css";
+import Arrow from "../components/icons/arrow.astro";
+import Github from "../components/icons/github.astro";
 ---
 
-<!-- profile2.webp you can remove | Photo <a href="https://unsplash.com/es/@charlesdeluvio?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">charlesdeluvio</a> en <a href="https://unsplash.com/es/fotos/hombre-con-gorro-negro-kVg2DQTAK7c?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
-   -->
+<Layout title="Hiten Khatri">
+  <div class="relative hero z-10">
+    <div
+      class="mx-auto min-h-screen max-w-screen-2xl px-6 py-12 font-sans md:px-12 md:py-20 lg:px-16 lg:py-0"
+    >
+      <div class="lg:flex lg:justify-between lg:gap-4">
+        <header
+          class="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-12"
+        >
+          <div>
+            <div
+              class="flex lg:items-start gap-4 flex-col lg:flex-row items-center text-center lg:text-left"
+            >
+              <img src="/avatar.webp" alt="Hiten Khatri" class="w-40 h-32 rounded-lg" />
 
-<!-- You can replace the card's data with your own here. -->
-<BaseLayout title="Personal Card Portfolio Astro" description="Meta description. Here goes your page description. Provide a clear and concise summary of the content.">
-	<Card
-	  name="John Smith"
-	  position="Web Developer"
-	  aboutMe={`Hi there! I'm John, a seasoned web developer passionate about crafting clean and dynamic websites. With 5 years of experience, I specialize in front-end and back-end development using HTML, CSS, JavaScript, and frameworks like React and Angular.\n\nI thrive on creating user-centric designs and optimizing performance for seamless browsing experiences.\n\nLet's collaborate TOGHETER!`}
-	  linkedin="https://www.linkedin.com/in/#"
-	  github="https://github.com/alcarazbrian"
-	  cvLink="/files/resume-cv.pdf"
-	  profileImage="/images/profile2.webp"
-	/>
-</BaseLayout>
+              <div>
+                <a
+                  href="/"
+                  class="text-4xl lg:text-5xl block font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50"
+                >
+                  <h1>Hiten Khatri</h1>
+                </a>
+                <h2
+                  class="mt-2 text-sm lg:text-lg font-medium text-neutral-400"
+                >
+                  Experienced Full Stack Engineer
+                </h2>
 
-<!--
-	"Hi there!, I'm Brian. I hope this small template helps you gain visibility while you build great projects. Thank you for using it. I wish you success in everything you set out to do; you will surely achieve great things.
+                <a
+                  data-ccursor
+                  href="mailto:hitenkhatri14@gmail.com"
+                  class="inline-flex transition-all border-neutral-700 hover:border-opacity-0 border-opacity-50 shadow rounded-md border backdrop-blur-xl bg-neutral-400/10 px-3 py-2.5 items-center text-white font-semibold group p-2 text-sm gap-x-2 mt-4"
+                >
+                  <span>Email me</span>
+                  <sapn
+                    class="w-2 h-2 rounded-full bg-green-400 duration-1000 animate-pulse"
+                  >
+                  </sapn>
+                </a>
+              </div>
+            </div>
 
-	Here is my GitHub {https://github.com/alcarazbrian}. You can help me by following me, giving a Star to the template, and sharing it so others can see and use it.
+            <div class="mt-10 link_section">
+              <ul>
+                <li>
+                  <a
+                    href="#about-me"
+                    rel="noreferrer"
+                    class="flex gap-1 items-center"
+                  >
+                    <LocationIcon />
+                    <span
+                      class="mt-0.5 tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200 bg-opacity-50 font-semibold"
+                      >About Me</span
+                    >
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#work-experience"
+                    rel="noreferrer"
+                    class="flex gap-1 items-center"
+                  >
+                    <LocationIcon />
+                    <span
+                      class="mt-0.5 tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200 bg-opacity-50 font-semibold"
+                      >Work Experience</span
+                    >
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#projects"
+                    rel="noreferrer"
+                    class="flex gap-1 items-center"
+                  >
+                    <LocationIcon />
+                    <span
+                      class="mt-0.5 tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200 bg-opacity-50 font-semibold"
+                      >Projects</span
+                    >
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#skills"
+                    rel="noreferrer"
+                    class="flex gap-1 items-center"
+                  >
+                    <LocationIcon />
+                    <span
+                      class="mt-0.5 tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-200 bg-opacity-50 font-semibold"
+                      >Skills</span
+                    >
+                  </a>
+                </li>
+              </ul>
+            </div>
 
-	Have a great day!"
- -->
+            <div class="mt-12 resume-section">
+              <a
+                data-ccursor
+                class="inline-flex items-center leading-tight text-neutral-200 font-semibold group p-2 rounded px-3"
+                aria-label="View Full Resume"
+                target="_blank"
+                rel="noreferrer noopener"
+                href="./Hiten_Khatri-CV.pdf"
+              >
+                <span>
+                  <span
+                    class="border-b border-transparent pb-px transition group-hover:border-neutral-300 motion-reduce:transition-none"
+                  >
+                    View Full
+                  </span>
+
+                  <span class="whitespace-nowrap">
+                    <span
+                      class="border-b border-transparent pb-px transition group-hover:border-neutral-300 motion-reduce:transition-none"
+                    >
+                      Resume
+                    </span>
+
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      class="ml-1 inline-block h-4 w-4 shrink-0 -translate-y-px transition-transform group-hover:translate-x-2 group-focus-visible:translate-x-2 motion-reduce:transition-none"
+                      aria-hidden="true"
+                      ><path
+                        fill-rule="evenodd"
+                        d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                        clip-rule="evenodd"></path></svg
+                    ></span
+                  ></span
+                ></a
+              >
+            </div>
+          </div>
+
+          {
+            SOCIALS.length && (
+              <ul
+                class="mt-8 flex items-center justify-center lg:justify-normal gap-x-5"
+                aria-label="Social media"
+              >
+                {SOCIALS.map((social) => (
+                  <li class="text-xs p-2 rounded" data-ccursor>
+                    <a
+                      class="block hover:text-slate-200"
+                      href={social.url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      aria-label={`${social.name} (opens in a new tab)`}
+                    >
+                      <span class="sr-only">{social.name}</span>
+                      {<Component component={social.icon} />}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </header>
+
+        <main id="content" class="pt-24 lg:w-1/2 lg:py-12">
+          <section
+            id="about"
+            class="mb-10 scroll-mt-16 md:mb-10 lg:mb-10 lg:scroll-mt-24"
+            aria-label="About me"
+          >
+            <div class="custom_heading">
+              <h3>About Me</h3>
+            </div>
+
+            <div
+              class="sticky top-0 z-20 -mx-6 mb-4 w-screen px-6 py-3 backdrop-blur-lg md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0"
+            >
+              <h2
+                class="text-sm font-bold uppercase tracking-widest text-neutral-200 lg:sr-only"
+              >
+                About
+              </h2>
+            </div>
+
+            <div>
+              <div
+                class="mb-4 space-y-4 text-[16px]"
+                style="line-height: 23px;"
+              >
+                <p>
+                  I am a Full Stack Engineer with a strong expertise in the MERN
+                  stack (<a
+                    href="https://www.mongodb.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-orange-600 font-semibold">MongoDB</a
+                  >, <a
+                    href="https://expressjs.com/"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-orange-600 font-semibold">Express.js</a
+                  >, <a
+                    href="https://react.dev/"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-orange-600 font-semibold">React.js</a
+                  >, and <a
+                    href="https://nodejs.org/en"
+                    target="_blank"
+                    rel="noreferrer"
+                    class="text-orange-600 font-semibold">Node.js</a
+                  >). With a passion for building scalable and efficient web
+                  applications, I specialize in crafting seamless user
+                  experiences and backend systems. From designing intuitive
+                  front-end interfaces to implementing robust server-side logic,
+                  I thrive on delivering high-quality solutions that meet modern
+                  web standards.
+                </p>
+
+                <p>
+                  Looking forward to new challenges and exciting collaborations!
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section
+            id="experience"
+            class="mb-10 scroll-mt-16 md:mb-24 lg:mb-10 lg:scroll-mt-24"
+            aria-label="Work experience"
+          >
+            <div class="custom_heading custom_heading1">
+              <h3>Work Experience</h3>
+            </div>
+
+            <div
+              class="sticky top-0 z-20 -mx-6 mb-4 w-screen px-6 py-3 backdrop-blur-lg md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0"
+            >
+              <h2
+                class="text-sm font-bold uppercase tracking-widest text-neutral-200 lg:sr-only"
+              >
+                Experience
+              </h2>
+            </div>
+
+            <div>
+              <ol class="group/list space-y-12">
+                {EXPERIENCE.map((experience) => <Experience {...experience} />)}
+              </ol>
+            </div>
+          </section>
+
+          <section>
+            <div class="custom_heading custom_heading1">
+              <h3>Projects</h3>
+            </div>
+
+            <div
+              class="grid grid-cols-1 gap-3 md:grid-cols-2 print:flex print:flex-col"
+            >
+              {
+                PROJECTS.map(
+                  ({ url, description, highlights, name, isActive }) => {
+                    return (
+                      <div
+                        role="contentinfo"
+                        class="grid-span-1 ring-neutral-800 relative flex flex-col rounded-md bg-neutral-900/50 p-5 shadow-sm ring-1"
+                      >
+                        <div class="flex items-center justify-between space-x-[10px]">
+                          <div class="flex items-center gap-2">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="lucide lucide-folder size-4"
+                            >
+                              <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
+                            </svg>
+
+                            <div class="flex items-center gap-[6px]">
+                              <a
+                                class="hover:text-orange-600 group flex items-center gap-[6px] text-sm decoration-dotted underline-offset-[5px] hover:underline"
+                                href={url}
+                                title={`Ver ${name}`}
+                                target="_blank"
+                              >
+                                {name}
+                                <span class="text-orange-600 transition mb-1 ease-linear group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                                  <Arrow />
+                                </span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+
+                        <p class="py-3 text-xs text-skin-base">{description}</p>
+                        <ul class="mt-1 text-xs text-neutral-300 ml-[14px]">
+                          {highlights.map((highlight) => {
+                            return <li class="list-disc mb-2">{highlight}</li>;
+                          })}
+                        </ul>
+                      </div>
+                    );
+                  },
+                )
+              }
+            </div>
+          </section>
+
+          <footer class="max-w-md pb-16 mt-16 text-sm text-neutral-300 sm:pb-0">
+            <p>
+              If you can read this, I’ve probably fixed the bugs... or created
+              new ones!
+            </p>
+          </footer>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <footer class="text-center py-4 text-xs">
+    {new Date().getFullYear()} All rights reserved.
+  </footer>
+</Layout>
+
+<style scoped>
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .hero {
+    background-image: url(/pattern.svg);
+    background-position: top center;
+    background-repeat: no-repeat;
+    overflow-y: visible;
+    overflow-x: clip;
+  }
+
+  /*
+  .hero {
+    animation: fadeIn 3s;
+  }
+   */
+</style>
