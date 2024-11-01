@@ -1,3 +1,12 @@
+*{
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 .link_section {
     margin-left: 193px;
 }
@@ -9,43 +18,36 @@
 .link_section a {
     position: relative;
     width: fit-content;
+    overflow: hidden;
 }
 
 .link_section a::after {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 0;
+    left: -1px;
     width: 100%;
     height: 0.1em;
     background-color: #ea580c;
-    opacity: 0;
     transition: opacity 300ms, transform 300ms;
-}
-
-.link_section a:hover::after,
-.link_section a:focus::after {
-    opacity: 1;
-    transform: translate3d(0, 0.2em, 0);
-}
-
-/* Slide in */
-.link_section a {
-    overflow: hidden;
-}
-
-.link_section a::after {
     opacity: 1;
     transform: translate3d(-100%, 0, 0);
 }
 
 .link_section a:hover::after,
 .link_section a:focus::after {
+    opacity: 1;
+    /* transform: translate3d(0, 0.2em, 0); */
     transform: translate3d(0, 0, 0);
 }
 
 .resume-section {
     margin-left: 187px;
+}
+
+.brand{
+    /* font-family: "Raleway", sans-serif !important; */
+    font-family: "Space Grotesk", sans-serif !important;
 }
 
 .custom_heading h3 {
@@ -62,7 +64,8 @@
     padding: 0;
     margin: 0;
     margin-bottom: 22px;
-    font-family: "Raleway", sans-serif;
+    font-family: "Space Grotesk", sans-serif !important;
+    /* font-family: "Raleway", sans-serif !important; */
     color: #f2f2f2;
     -webkit-transition: all 0.4s ease 0s;
     -o-transition: all 0.4s ease 0s;
@@ -89,6 +92,135 @@
     width: 50%;
     margin-bottom: 2px;
 }
+
 .custom_heading1 h3 {
     margin-bottom: 32px;
+}
+
+#desktop-contact .resume-section {
+    display: none;
+}
+
+#ham-icon {
+    display: none;
+}
+
+@media screen and (max-width: 700px) {
+    #ham-icon {
+        display: block;
+        position: fixed;
+        top: 0px;
+        right: 4px;
+        z-index: 101;
+    }
+
+    #nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        margin-top: 0;
+        transform: translate(550px, 0px);
+        height: 100%;
+        width: 100%;
+        z-index: 100;
+        transition: transform 0.17s ease-out;
+        padding-top: 20px;
+        background-color: rgba(26, 26, 32, 0.4);
+        background-clip: padding-box;
+        backdrop-filter: blur(18px);
+    }
+    #nav-links ul{
+        margin-top: 1.6rem;
+    }
+    #nav-links ul li {
+        width: 200px;
+        margin-bottom: 15px !important;
+        margin: auto;
+        font-size: 22px;
+    }
+
+    #nav-links.active {
+        transform: translate(0px, 0px);
+    }
+
+    .resume-section {
+        display: none;
+        margin-left: 0;
+    }
+
+    #desktop-contact .resume-section {
+        display: block;
+    }
+
+    #desktop-contact {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 17px;
+        gap: 10px;
+    }
+
+    #desktop-contact .contact-me {
+        margin-top: 0;
+        backdrop-filter: unset;
+    }
+
+    .social-links {
+        margin-top: 10px;
+    }
+
+    #ham-icon svg {
+        width: 46px;
+        height: 46px;
+    }
+
+    #ham-icon svg rect {
+        transition: 300ms all ease;
+        transform-box: fill-box;
+        fill: white;
+    }
+
+    #ham-icon svg rect.rect1 {
+        transform-origin: 0px 0px 0px;
+        transform: translate(96px, 241px) rotate(0deg);
+    }
+
+    #ham-icon svg rect.rect2 {
+        transform-origin: 0px 0px 0px;
+        transform: translate(96px, 145px) rotate(0deg);
+    }
+
+    #ham-icon svg rect.rect3 {
+        transform-origin: 0px 0px 0px;
+        transform: translate(96px, 337px) rotate(0deg);
+    }
+
+    #ham-icon .menu-icon.active rect.rect1 {
+        transform-origin: center center;
+        transform: translate(96px, 240px) rotate(45deg);
+    }
+
+    #ham-icon .menu-icon.active rect.rect2 {
+        transform-origin: center center;
+        transform: translate(96px, 240px) rotate(45deg);
+    }
+
+    #ham-icon .menu-icon.active rect.rect3 {
+        transform-origin: center center;
+        transform: translate(96px, 240px) rotate(-45deg);
+    }
+    .main-section{
+        padding-top: 26px;
+    }
+    .custom_heading h3{
+        font-size: 21px;
+        margin-bottom: 13px;
+    }
+    #about-me{
+        margin-bottom: 30px;
+    }
+    .footer{
+        margin-top: 2rem;
+        padding-bottom: 0;
+    }
 }

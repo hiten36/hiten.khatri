@@ -1,6 +1,8 @@
 ---
 import Component from "../components/Component.astro";
 import Experience from "../components/experience/index.astro";
+import Project from "../components/project/index.astro";
+import Social from "../components/social/index.astro";
 import { EXPERIENCE } from "../data/experience";
 import { SOCIALS } from "../data/socials";
 import { PROJECTS } from "../data/projects";
@@ -20,42 +22,110 @@ import Github from "../components/icons/github.astro";
         <header
           class="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-12"
         >
-          <div>
+          <!-- Hamburger Icon -->
+          <div id="ham-icon" onclick="toggleMenu()">
+            <svg
+              class="menu-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              x="0px"
+              y="0px"
+              width="512px"
+              height="512px"
+              viewBox="0 0 512 512"
+              style="enable-background:new 0 0 512 512;"
+              xml:space="preserve"
+            >
+              <title>Menu Icon</title>
+              <g>
+                <rect class="rect1" width="320" height="32"></rect>
+                <rect class="rect2" width="320" height="32"></rect>
+                <rect class="rect3" width="320" height="32"></rect>
+              </g>
+            </svg>
+          </div>
+
+          <div class="mob-1">
             <div
               class="flex lg:items-start gap-4 flex-col lg:flex-row items-center text-center lg:text-left"
             >
-              <img src="/avatar.webp" alt="Hiten Khatri" class="w-40 h-32 rounded-lg" />
+              <img
+                src="/avatar.webp"
+                alt="Hiten Khatri"
+                class="w-40 h-[8.35rem] rounded-lg"
+              />
 
-              <div>
+              <div class="bottom-[7px] relative">
                 <a
                   href="/"
                   class="text-4xl lg:text-5xl block font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50"
                 >
-                  <h1>Hiten Khatri</h1>
+                  <h1 class="brand">Hiten Khatri</h1>
                 </a>
                 <h2
-                  class="mt-2 text-sm lg:text-lg font-medium text-neutral-400"
+                  class="mt-2 text-sm lg:text-lg font-medium text-neutral-300"
                 >
                   Experienced Full Stack Engineer
                 </h2>
 
-                <a
-                  data-ccursor
-                  href="mailto:hitenkhatri14@gmail.com"
-                  class="inline-flex transition-all border-neutral-700 hover:border-opacity-0 border-opacity-50 shadow rounded-md border backdrop-blur-xl bg-neutral-400/10 px-3 py-2.5 items-center text-white font-semibold group p-2 text-sm gap-x-2 mt-4"
-                >
-                  <span>Email me</span>
-                  <sapn
-                    class="w-2 h-2 rounded-full bg-green-400 duration-1000 animate-pulse"
+                <div id="desktop-contact">
+                  <a
+                    data-ccursor
+                    href="mailto:hitenkhatri14@gmail.com"
+                    class="contact-me inline-flex transition-all border-neutral-700 hover:border-opacity-0 border-opacity-50 shadow rounded-md border backdrop-blur-xl bg-neutral-400/10 px-3 py-2.5 items-center text-white font-semibold group p-2 text-sm gap-x-2 mt-4"
+                    aria-label="Contact Me"
                   >
-                  </sapn>
-                </a>
+                    <span>Contact me</span>
+                    <sapn
+                      class="w-2 h-2 rounded-full bg-green-400 duration-1000 animate-pulse"
+                    >
+                    </sapn>
+                  </a>
+
+                  <div class="resume-section">
+                    <a
+                      data-ccursor
+                      class="inline-flex items-center leading-tight text-neutral-200 font-semibold group p-2 rounded px-3"
+                      aria-label="View Full Resume"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      href="./Hiten_Khatri-CV.pdf"
+                    >
+                      <span>
+                        <span
+                          class="border-b border-transparent pb-px transition group-hover:border-neutral-300 motion-reduce:transition-none"
+                        >
+                          View Full
+                        </span>
+
+                        <span class="whitespace-nowrap">
+                          <span
+                            class="border-b border-transparent pb-px transition group-hover:border-neutral-300 motion-reduce:transition-none"
+                          >
+                            Resume
+                          </span>
+
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="ml-1 inline-block h-4 w-4 shrink-0 -translate-y-px transition-transform group-hover:translate-x-2 group-focus-visible:translate-x-2 motion-reduce:transition-none"
+                            aria-hidden="true"
+                            ><path
+                              fill-rule="evenodd"
+                              d="M3 10a.75.75 0 01.75-.75h10.638L10.23 5.29a.75.75 0 111.04-1.08l5.5 5.25a.75.75 0 010 1.08l-5.5 5.25a.75.75 0 11-1.04-1.08l4.158-3.96H3.75A.75.75 0 013 10z"
+                              clip-rule="evenodd"></path></svg
+                          ></span
+                        ></span
+                      ></a
+                    >
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="mt-10 link_section">
+            <div id="nav-links" class="mt-7 link_section">
               <ul>
-                <li>
+                <li onclick="toggleMenu(true)">
                   <a
                     href="#about-me"
                     rel="noreferrer"
@@ -68,7 +138,7 @@ import Github from "../components/icons/github.astro";
                     >
                   </a>
                 </li>
-                <li>
+                <li onclick="toggleMenu(true)">
                   <a
                     href="#work-experience"
                     rel="noreferrer"
@@ -81,7 +151,7 @@ import Github from "../components/icons/github.astro";
                     >
                   </a>
                 </li>
-                <li>
+                <li onclick="toggleMenu(true)">
                   <a
                     href="#projects"
                     rel="noreferrer"
@@ -94,7 +164,7 @@ import Github from "../components/icons/github.astro";
                     >
                   </a>
                 </li>
-                <li>
+                <li onclick="toggleMenu(true)">
                   <a
                     href="#skills"
                     rel="noreferrer"
@@ -150,34 +220,19 @@ import Github from "../components/icons/github.astro";
             </div>
           </div>
 
-          {
-            SOCIALS.length && (
-              <ul
-                class="mt-8 flex items-center justify-center lg:justify-normal gap-x-5"
-                aria-label="Social media"
-              >
-                {SOCIALS.map((social) => (
-                  <li class="text-xs p-2 rounded" data-ccursor>
-                    <a
-                      class="block hover:text-slate-200"
-                      href={social.url}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      aria-label={`${social.name} (opens in a new tab)`}
-                    >
-                      <span class="sr-only">{social.name}</span>
-                      {<Component component={social.icon} />}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )
-          }
+          <!-- Social Media -->
+          <ul
+            class="social-links mt-8 flex items-center justify-center lg:justify-normal gap-x-5"
+            aria-label="Social media"
+          >
+            {SOCIALS.map((social) => <Social {...social} />)}
+          </ul>
         </header>
 
-        <main id="content" class="pt-24 lg:w-1/2 lg:py-12">
+        <main class="main-section pt-24 lg:w-1/2 lg:py-12">
+          <!-- About Me -->
           <section
-            id="about"
+            id="about-me"
             class="mb-10 scroll-mt-16 md:mb-10 lg:mb-10 lg:scroll-mt-24"
             aria-label="About me"
           >
@@ -185,60 +240,51 @@ import Github from "../components/icons/github.astro";
               <h3>About Me</h3>
             </div>
 
-            <div
-              class="sticky top-0 z-20 -mx-6 mb-4 w-screen px-6 py-3 backdrop-blur-lg md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0"
-            >
-              <h2
-                class="text-sm font-bold uppercase tracking-widest text-neutral-200 lg:sr-only"
-              >
-                About
-              </h2>
-            </div>
+            <div class="mb-4 space-y-4 text-[16px]" style="line-height: 23px;">
+              <p>
+                I am a Full Stack Engineer with a strong expertise in the MERN
+                stack (<a
+                  href="https://www.mongodb.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="text-orange-600 font-semibold">MongoDB</a
+                >, <a
+                  href="https://expressjs.com/"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="text-orange-600 font-semibold">Express.js</a
+                >, <a
+                  href="https://react.dev/"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="text-orange-600 font-semibold">React.js</a
+                >, <a
+                  href="https://nextjs.org/"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="text-orange-600 font-semibold">Next.js</a
+                >, and <a
+                  href="https://nodejs.org/en"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="text-orange-600 font-semibold">Node.js</a
+                >). With a passion for building scalable and efficient web
+                applications, I specialize in crafting seamless user experiences
+                and backend systems. From designing intuitive front-end
+                interfaces to implementing robust server-side logic, I thrive on
+                delivering high-quality solutions that meet modern web
+                standards.
+              </p>
 
-            <div>
-              <div
-                class="mb-4 space-y-4 text-[16px]"
-                style="line-height: 23px;"
-              >
-                <p>
-                  I am a Full Stack Engineer with a strong expertise in the MERN
-                  stack (<a
-                    href="https://www.mongodb.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="text-orange-600 font-semibold">MongoDB</a
-                  >, <a
-                    href="https://expressjs.com/"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="text-orange-600 font-semibold">Express.js</a
-                  >, <a
-                    href="https://react.dev/"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="text-orange-600 font-semibold">React.js</a
-                  >, and <a
-                    href="https://nodejs.org/en"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="text-orange-600 font-semibold">Node.js</a
-                  >). With a passion for building scalable and efficient web
-                  applications, I specialize in crafting seamless user
-                  experiences and backend systems. From designing intuitive
-                  front-end interfaces to implementing robust server-side logic,
-                  I thrive on delivering high-quality solutions that meet modern
-                  web standards.
-                </p>
-
-                <p>
-                  Looking forward to new challenges and exciting collaborations!
-                </p>
-              </div>
+              <p>
+                Looking forward to new challenges and exciting collaborations!
+              </p>
             </div>
           </section>
 
+          <!-- Work Experience -->
           <section
-            id="experience"
+            id="work-experience"
             class="mb-10 scroll-mt-16 md:mb-24 lg:mb-10 lg:scroll-mt-24"
             aria-label="Work experience"
           >
@@ -246,24 +292,15 @@ import Github from "../components/icons/github.astro";
               <h3>Work Experience</h3>
             </div>
 
-            <div
-              class="sticky top-0 z-20 -mx-6 mb-4 w-screen px-6 py-3 backdrop-blur-lg md:-mx-12 md:px-12 lg:sr-only lg:relative lg:top-auto lg:mx-auto lg:w-full lg:px-0 lg:py-0 lg:opacity-0"
-            >
-              <h2
-                class="text-sm font-bold uppercase tracking-widest text-neutral-200 lg:sr-only"
-              >
-                Experience
-              </h2>
-            </div>
-
             <div>
-              <ol class="group/list space-y-12">
+              <ol class="group/list space-y-6 lg:space-y-12">
                 {EXPERIENCE.map((experience) => <Experience {...experience} />)}
               </ol>
             </div>
           </section>
 
-          <section>
+          <!-- Projects -->
+          <section id="projects" aria-label="Projects">
             <div class="custom_heading custom_heading1">
               <h3>Projects</h3>
             </div>
@@ -271,62 +308,11 @@ import Github from "../components/icons/github.astro";
             <div
               class="grid grid-cols-1 gap-3 md:grid-cols-2 print:flex print:flex-col"
             >
-              {
-                PROJECTS.map(
-                  ({ url, description, highlights, name, isActive }) => {
-                    return (
-                      <div
-                        role="contentinfo"
-                        class="grid-span-1 ring-neutral-800 relative flex flex-col rounded-md bg-neutral-900/50 p-5 shadow-sm ring-1"
-                      >
-                        <div class="flex items-center justify-between space-x-[10px]">
-                          <div class="flex items-center gap-2">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              class="lucide lucide-folder size-4"
-                            >
-                              <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z" />
-                            </svg>
-
-                            <div class="flex items-center gap-[6px]">
-                              <a
-                                class="hover:text-orange-600 group flex items-center gap-[6px] text-sm decoration-dotted underline-offset-[5px] hover:underline"
-                                href={url}
-                                title={`Ver ${name}`}
-                                target="_blank"
-                              >
-                                {name}
-                                <span class="text-orange-600 transition mb-1 ease-linear group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
-                                  <Arrow />
-                                </span>
-                              </a>
-                            </div>
-                          </div>
-                        </div>
-
-                        <p class="py-3 text-xs text-skin-base">{description}</p>
-                        <ul class="mt-1 text-xs text-neutral-300 ml-[14px]">
-                          {highlights.map((highlight) => {
-                            return <li class="list-disc mb-2">{highlight}</li>;
-                          })}
-                        </ul>
-                      </div>
-                    );
-                  },
-                )
-              }
+              {PROJECTS.map((project) => <Project {...project} />)}
             </div>
           </section>
 
-          <footer class="max-w-md pb-16 mt-16 text-sm text-neutral-300 sm:pb-0">
+          <footer class="footer max-w-md pb-16 mt-16 text-sm text-neutral-300 sm:pb-0">
             <p>
               If you can read this, I’ve probably fixed the bugs... or created
               new ones!
@@ -359,10 +345,20 @@ import Github from "../components/icons/github.astro";
     overflow-y: visible;
     overflow-x: clip;
   }
-
-  /*
-  .hero {
-    animation: fadeIn 3s;
-  }
-   */
 </style>
+
+<script defer is:inline>
+  const toggleMenu = (flag) => {
+    let b1 = document.querySelector(".menu-icon");
+    let b2 = document.getElementById("nav-links");
+    if (flag) {
+      if (b1.classList.contains("active")) {
+        b1.classList.toggle("active");
+        b2.classList.toggle("active");
+      }
+    } else {
+      b1.classList.toggle("active");
+      b2.classList.toggle("active");
+    }
+  };
+</script>

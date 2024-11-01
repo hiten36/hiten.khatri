@@ -1,0 +1,19 @@
+---
+import Component from "../Component.astro";
+import type { Props } from "./props";
+
+const { url, name, icon } = Astro.props;
+---
+
+<li class="text-xs p-2 rounded" data-ccursor>
+    <a
+      class="block hover:text-slate-200"
+      href={url}
+      target="_blank"
+      rel="noreferrer noopener"
+      aria-label={`${name} (opens in a new tab)`}
+    >
+      <span class="sr-only">{name}</span>
+      {<Component component={icon} />}
+    </a>
+  </li>

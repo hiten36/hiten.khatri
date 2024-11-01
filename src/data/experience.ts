@@ -16,7 +16,7 @@ export const EXPERIENCE: ExperienceProp[] = [
       "Tailwind",
       "Material UI"
     ],
-    logo: "/logos/appinventiv.png",
+    logo: "/logos/appinventiv.webp",
   },
   {
     dates: "November 2023 — July 2024",
@@ -36,7 +36,7 @@ export const EXPERIENCE: ExperienceProp[] = [
       "Express.Js",
       "GraphQL"
     ],
-    logo: "/logos/binarymetrix_technologies_logo.jpg",
+    logo: "/logos/binarymetrix_technologies_logo.webp",
   },
   {
     dates: "January 2022 — August 2023",
@@ -56,7 +56,7 @@ export const EXPERIENCE: ExperienceProp[] = [
       "Express.Js",
       "GraphQL"
     ],
-    logo: "/logos/aspirehive_logo.jpg",
+    logo: "/logos/aspirehive_logo.webp",
   },
   {
     dates: "September 2021 — December 2021",
@@ -74,7 +74,7 @@ export const EXPERIENCE: ExperienceProp[] = [
       "Tailwind",
       "Express.Js",
     ],
-    logo: "/logos/kds.jpg",
+    logo: "/logos/kds.webp",
   },
   {
     dates: "Febuary 2021 — August 2021",
@@ -92,7 +92,7 @@ export const EXPERIENCE: ExperienceProp[] = [
       "Tailwind",
       "Express.Js",
     ],
-    logo: "/logos/xamnation.png",
+    logo: "/logos/xamnation.webp"
   },
   {
     dates: "August 2020 — January 2021",
@@ -110,6 +110,6 @@ export const EXPERIENCE: ExperienceProp[] = [
       "Tailwind",
       "Express.Js",
     ],
-    logo: "/logos/krishakveda.png",
-  },
+    logo: "/logos/krishakveda.webp"
+  }
 ];
