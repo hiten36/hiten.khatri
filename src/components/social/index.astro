@@ -14,6 +14,6 @@ const { url, name, icon } = Astro.props;
       aria-label={`${name} (opens in a new tab)`}
     >
       <span class="sr-only">{name}</span>
-      {<Component component={icon} />}
+      <Component component={icon} />
     </a>
   </li>
