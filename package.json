@@ -22,7 +22,7 @@
     "@types/react-dom": "^19.0.1",
     "astro": "^5.0.3",
     "clsx": "^2.1.1",
-    "framer-motion": "^11.13.1",
+    "framer-motion": "^12.0.0-alpha.1",
     "gsap": "^3.12.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
