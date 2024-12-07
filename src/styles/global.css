@@ -1,4 +1,4 @@
-*{
+* {
     font-family: "Nunito", sans-serif;
     font-optical-sizing: auto;
 }
@@ -45,7 +45,7 @@ html {
     margin-left: 187px;
 }
 
-.brand{
+.brand {
     font-family: "Space Grotesk", sans-serif !important;
 }
 
@@ -103,6 +103,111 @@ html {
     display: none;
 }
 
+.skill-pill {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+}
+
+.skill-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.skill-pill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: theme('colors.orange.600');
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+.skill-pill:hover::before {
+    transform: scaleY(1);
+}
+
+/* Performance Optimizations */
+img {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+img.visible {
+    opacity: 1;
+}
+
+.skill-pill {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.skill-pill.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+.skill-category {
+    content-visibility: auto;
+    contain-intrinsic-size: 0 500px;
+}
+
+@keyframes pulse {
+    50% {
+        opacity: .5;
+    }
+}
+
+.command-button {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@media (prefers-reduced-motion) {
+    .command-button {
+        animation: none;
+    }
+}
+
+.command-button {
+    animation: animate-pulse 3s linear infinite 3s;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.25);
+    background: rgba(72, 72, 72, 0.849);
+}
+
+@keyframes animate-pulse{
+    0%{
+        box-shadow: 0 0 0 0 rgba(153, 153, 153, 0.584),  0 0 0 0 rgba(156, 156, 156, 0.584);
+    }
+    40%{
+        box-shadow: 0 0 0 20px rgba(255,109,74,0.0),  0 0 0 0 rgba(159, 159, 159, 0.592);
+    }
+    80%{
+        box-shadow: 0 0 0 20px rgba(255,109,74,0.0),  0 0 0 10px rgba(255,109,74,0);
+    }
+    100%{
+        box-shadow: 0 0 0 0 rgba(255,109,74,0.0),  0 0 0 10px rgba(255,109,74,0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .command-button,
+    .animate-ripple {
+        animation: none;
+    }
+}
+
 @media screen and (max-width: 700px) {
     #ham-icon {
         display: block;
@@ -127,9 +232,11 @@ html {
         background-clip: padding-box;
         backdrop-filter: blur(18px);
     }
-    #nav-links ul{
+
+    #nav-links ul {
         margin-top: 1.6rem;
     }
+
     #nav-links ul li {
         width: 200px;
         margin-bottom: 15px !important;
@@ -207,81 +314,28 @@ html {
         transform-origin: center center;
         transform: translate(96px, 240px) rotate(-45deg);
     }
-    .main-section{
+
+    .main-section {
         padding-top: 26px;
     }
-    .custom_heading h3{
+
+    .custom_heading h3 {
         font-size: 21px;
         margin-bottom: 13px;
     }
-    #about-me{
+
+    #about-me {
         margin-bottom: 30px;
     }
-    .footer{
+
+    .footer {
         margin-top: 2rem;
         padding-bottom: 0;
     }
-}
-
-.skill-pill {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transform: translateY(0);
-}
-
-.skill-pill:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.skill-pill::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 2px;
-  height: 100%;
-  background: theme('colors.orange.600');
-  transform: scaleY(0);
-  transition: transform 0.3s ease;
-}
-
-.skill-pill:hover::before {
-  transform: scaleY(1);
-}
-
-/* Performance Optimizations */
-img {
-  opacity: 0;
-  transition: opacity 0.3s ease-in-out;
-}
-
-img.visible {
-  opacity: 1;
-}
-
-.skill-pill {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.skill-pill.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Reduce motion if preferred */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-}
-
-/* Content-visibility optimization */
-.skill-category {
-  content-visibility: auto;
-  contain-intrinsic-size: 0 500px;
+    .command-button {
+        left: 0;
+        right: 0;
+        margin: auto;
+        width: fit-content;
+    }
 }

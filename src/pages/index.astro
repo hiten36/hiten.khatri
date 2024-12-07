@@ -2,6 +2,7 @@
 import Experience from "../components/experience/index.astro";
 import Project from "../components/project/index.astro";
 import Social from "../components/social/index.astro";
+import CommandPalette from "../components/CommandPalette";
 import { EXPERIENCE } from "../data/experience";
 import { SOCIALS } from "../data/socials";
 import { PROJECTS } from "../data/projects";
@@ -9,9 +10,34 @@ import Layout from "../layouts/Layout.astro";
 import LocationIcon from "../components/icons/location.astro";
 import "../styles/global.css";
 import { SKILLS } from "../data/skills";
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Hiten Khatri",
+  "jobTitle": "Full Stack Engineer",
+  "url": "https://hitenkhatri.vercel.app/",
+  "sameAs": [
+    "https://github.com/hiten36/",
+    "https://www.linkedin.com/in/hiten-khatri-63899b198/",
+    "https://x.com/Hiten17424005",
+    "https://www.instagram.com/hiten_khatri/"
+  ],
+  "knowsAbout": [
+    "React",
+    "Node.js",
+    "MongoDB",
+    "Express.js",
+    "Next.js",
+    "Full Stack Development"
+  ]
+};
 ---
 
 <Layout title="Hiten Khatri | Full Stack Engineer">
+  <!-- Add structured data script -->
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  
   <div class="relative hero z-10">
     <div
       class="mx-auto min-h-screen max-w-screen-2xl px-6 py-12 font-sans md:px-12 md:py-20 lg:px-16 lg:py-0"
@@ -220,7 +246,7 @@ import { SKILLS } from "../data/skills";
 
           <!-- Social Media -->
           <ul
-            class="social-links mt-8 flex items-center justify-center lg:justify-normal gap-x-5"
+            class="social-links mt-8 mb-8 flex items-center justify-center lg:justify-normal gap-x-5"
             aria-label="Social media"
           >
             {SOCIALS.map((social) => <Social {...social} />)}
@@ -380,6 +406,8 @@ import { SKILLS } from "../data/skills";
         </main>
       </div>
     </div>
+
+    <CommandPalette client:load />
   </div>
 
   <footer class="text-center py-4 text-xs">
