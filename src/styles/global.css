@@ -46,7 +46,6 @@ html {
 }
 
 .brand{
-    /* font-family: "Raleway", sans-serif !important; */
     font-family: "Space Grotesk", sans-serif !important;
 }
 
@@ -65,7 +64,6 @@ html {
     margin: 0;
     margin-bottom: 22px;
     font-family: "Space Grotesk", sans-serif !important;
-    /* font-family: "Raleway", sans-serif !important; */
     color: #f2f2f2;
     -webkit-transition: all 0.4s ease 0s;
     -o-transition: all 0.4s ease 0s;
@@ -223,4 +221,67 @@ html {
         margin-top: 2rem;
         padding-bottom: 0;
     }
+}
+
+.skill-pill {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transform: translateY(0);
+}
+
+.skill-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.skill-pill::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: theme('colors.orange.600');
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+}
+
+.skill-pill:hover::before {
+  transform: scaleY(1);
+}
+
+/* Performance Optimizations */
+img {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+img.visible {
+  opacity: 1;
+}
+
+.skill-pill {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.skill-pill.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Reduce motion if preferred */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Content-visibility optimization */
+.skill-category {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
 }

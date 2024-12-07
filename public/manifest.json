@@ -1,0 +1,21 @@
+{
+  "name": "Hiten Khatri | Full Stack Engineer",
+  "short_name": "Hiten Khatri",
+  "description": "Full Stack Engineer specializing in MERN stack development",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/avatar.webp",
+      "sizes": "192x192",
+      "type": "image/webp"
+    },
+    {
+      "src": "/avatar.webp",
+      "sizes": "512x512",
+      "type": "image/webp"
+    }
+  ]
+} 

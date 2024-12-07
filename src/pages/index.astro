@@ -8,6 +8,7 @@ import { PROJECTS } from "../data/projects";
 import Layout from "../layouts/Layout.astro";
 import LocationIcon from "../components/icons/location.astro";
 import "../styles/global.css";
+import { SKILLS } from "../data/skills";
 ---
 
 <Layout title="Hiten Khatri | Full Stack Engineer">
@@ -306,6 +307,67 @@ import "../styles/global.css";
               class="grid grid-cols-1 gap-3 md:grid-cols-2 print:flex print:flex-col"
             >
               {PROJECTS.map((project) => <Project {...project} />)}
+            </div>
+          </section>
+
+          <!-- Skills -->
+          <section 
+            id="skills" 
+            class="mt-16 scroll-mt-16 md:mb-24 lg:mb-10 lg:scroll-mt-24" 
+            aria-label="Skills"
+          >
+            <div class="custom_heading custom_heading1">
+              <h3>Skills</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="skill-category">
+                <h4 class="text-orange-600 font-semibold mb-2">Frontend</h4>
+                <div class="flex flex-wrap gap-2">
+                  {SKILLS.frontend.map((skill) => (
+                    <span class="skill-pill px-3 py-1.5 text-sm bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
+                      <span class="relative z-10 text-sm">{skill}</span>
+                      <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div class="skill-category">
+                <h4 class="text-orange-600 font-semibold mb-2">Backend</h4>
+                <div class="flex flex-wrap gap-2">
+                  {SKILLS.backend.map((skill) => (
+                    <span class="skill-pill px-3 py-1.5 text-sm bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
+                      <span class="relative z-10">{skill}</span>
+                      <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div class="skill-category">
+                <h4 class="text-orange-600 font-semibold mb-2">Tools & DevOps</h4>
+                <div class="flex flex-wrap gap-2">
+                  {SKILLS.toolsAndDevOps.map((skill) => (
+                    <span class="skill-pill px-3 py-1.5 text-sm bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
+                      <span class="relative z-10">{skill}</span>
+                      <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div class="skill-category">
+                <h4 class="text-orange-600 font-semibold mb-2">Other</h4>
+                <div class="flex flex-wrap gap-2">
+                  {SKILLS.other.map((skill) => (
+                    <span class="skill-pill px-3 py-1.5 text-sm bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
+                      <span class="relative z-10">{skill}</span>
+                      <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
           </section>
 
