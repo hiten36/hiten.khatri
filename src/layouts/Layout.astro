@@ -9,7 +9,6 @@ declare global {
     startViewTransition(callback: () => void): void;
   }
 }
-
 ---
 
 <!doctype html>
@@ -21,9 +20,12 @@ declare global {
       content="Explore the portfolio of Hiten Khatri, a passionate Full Stack Engineer specializing in modern technologies like React.js, Node.js, Next.js and MERN Stack. Showcasing innovative projects, skills, and expertise in building dynamic and scalable applications"
     />
     <link rel="icon" type="image/webp" href="/favicon.webp" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Space+Grotesk:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
     <meta name="viewport" content="width=device-width" />
     <meta
       name="google-site-verification"
@@ -40,21 +42,21 @@ declare global {
   <body
     class="bg-black leading-relaxed text-neutral-200 tracking-wide antialiased selection:bg-neutral-300 selection:text-neutral-900 z-10 relative"
   >
-      <SparklesCore
+    <SparklesCore
       client:idle
       id="tsparticlesfullpage"
-        background="transparent"
+      background="transparent"
       minSize={0.6}
-      maxSize={1.4}
+      maxSize={1.2}
       opacity={0.2}
-      particleDensity={100}
+      particleDensity={45}
       className="w-full h-full fixed z-0"
-        particleColor="#FFFFFF"
-        opacity={0.8}
-        speed={0.5}
-        client:only="react"
-      />
-      <slot />
+      particleColor="#FFFFFF"
+      opacity={0.6}
+      speed={0.5}
+      client:only="react"
+    />
+    <slot />
     <script src="../scripts/main.ts"></script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {

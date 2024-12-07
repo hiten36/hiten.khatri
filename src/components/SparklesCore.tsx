@@ -48,7 +48,7 @@ const SparklesCore = (props: ParticlesProps) => {
         opacity: opacity || 1,
         transition: {
           duration: 1,
-          delay: 2,
+          delay: 0,
         },
       });
     }
