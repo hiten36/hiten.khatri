@@ -11,7 +11,7 @@ export const SOCIALS = [
   },
   {
     name: "Linkedin",
-    url: "https://www.linkedin.com/in/hiten-khatri-63899b198/",
+    url: "https://www.linkedin.com/in/hiten-khatri/",
     icon: IconLinkedin,
   },
   {

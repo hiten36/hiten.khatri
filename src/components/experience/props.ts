@@ -3,7 +3,7 @@ export interface Props {
   title: string;
   company: string;
   companyUrl: string;
-  description: string;
+  description: string[];
   technologies: string[];
   logo?: string;
 }

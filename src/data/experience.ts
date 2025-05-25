@@ -6,14 +6,18 @@ export const EXPERIENCE: ExperienceProp[] = [
     title: "Frontend Engineer",
     company: "Appinventiv",
     companyUrl: "https://appinventiv.com/",
-    description:
-      "As a Frontend Engineer, I have worked on high-profile brands such as KFC, Pizza Hut, and Hardee's for the UAE market, delivering user-friendly and responsive web applications tailored to enhance customer experiences. In addition, I contributed to a healthcare project, focusing on creating intuitive and accessible interfaces.",
+    description: [
+      "✔ Engineered scalable user journeys for non-delivery modes (Dine-In, Carhop, Drive-Thru, Pickup) across KFC, Pizza Hut, and Hardee's, boosting order completion flow by 35%. Developed critical pages (Checkout, Payment, Thank You, Home) using React, TypeScript, Redux, MUI, with multi-region and multi-language support. Integrated Firebase for real-time order handling (BSP & SDM) and implemented BFF architecture, enhancing API performance and security by 75%.",
+      "✔ Built a shared UI library, reducing UI rework by 40%. In a healthcare project, built a doctor-patient platform with video consultations, real-time chat, medicine delivery, and payments, increasing engagement by 45%. Used TanStack Query, Zustand, TypeScript, and custom hooks to improve data handling and reduce booking errors by 40%, while delivering a responsive, accessible UI via Tailwind CSS and TanStack Router."
+    ],
     technologies: [
       "React",
       "Redux",
+      "Zustand",
+      "TanStack",
       "Next.Js",
+      "Typescript",
       "Google Cloud",
-      "Tailwind",
       "Material UI"
     ],
     logo: "/logos/appinventiv.webp",
@@ -23,8 +27,11 @@ export const EXPERIENCE: ExperienceProp[] = [
     title: "Full Stack Engineer",
     company: "BinaryMetrix Technologies",
     companyUrl: "https://www.binarymetrix.com/",
-    description:
-      "I developed backend services and APIs for a taxi booking app, improving efficiency and user experience. I also built web platforms and API services for mobile apps, boosting operational efficiency by 20%. Additionally, I led projects like an Instagram-like Reel maker and a stock trading app, increasing user engagement by 30%.",
+    description: [
+      "✔ Built scalable backend services and APIs using Node.js, Express.js, and PostgreSQL for a ride-sharing platform, enabling real-time ride matching, fare estimation, and trip scheduling. Designed an admin panel with React, Redux, and TypeScript for managing drivers, trips, and zones, improving operational handling speed by 35% and reducing trip delays by 28%. Integrated Firebase for real-time updates, dynamic pricing, geofencing, and reporting, cutting support tickets by 22% and increasing trip completions by 18%, while server optimizations improved response times by 40% under high load.",
+      "✔ Built a full-stack, video-centric social media PWA with Next.js, Zustand, React Query, and TypeScript, offering offline support and fast routing. Added features like live voice translation (Deepgram API), 100ms live streaming, and FFmpeg-based video editing, boosting user engagement by 40% and reducing bounce rate by 33%. Performance enhancements via private routes, HOCs, and caching strategies improved FCP by 1.2s, enhancing UX on slow networks.",
+      "✔ Engineered a real-time stock trading platform with features such as live market feeds, candle charts, watchlists, and trade execution, improving trading speed by 40% over legacy apps. Integrated WebSockets, TradingView, and Recharts for dynamic updates, with secure role-based authentication, 2FA, and admin dashboards, achieving 99.9% uptime and onboarding 500+ active traders in the first quarter."
+    ],
     technologies: [
       "React",
       "Next.Js",
@@ -39,50 +46,15 @@ export const EXPERIENCE: ExperienceProp[] = [
     logo: "/logos/binarymetrix_technologies_logo.webp",
   },
   {
-    dates: "January 2022 — August 2023",
-    title: "Full Stack Engineer",
-    company: "Stacknexo LLP",
-    companyUrl: "https://www.aspirehive.com/",
-    description:
-      "Built a custom backend panel with a block text editor and Grammarly integration for content creators, enhancing content accuracy by 40%. Additionally, I developed a heartbeat API, web-socket, Google Authenticator, ChatBot, and email OTP verification, improving security and user interaction by 50%.",
-    technologies: [
-      "React",
-      "Next.Js",
-      "Node.Js",
-      "Chatbot",
-      "Azure",
-      "MongoDB",
-      "Tailwind",
-      "Express.Js",
-      "GraphQL"
-    ],
-    logo: "/logos/aspirehive_logo.webp",
-  },
-  {
-    dates: "September 2021 — December 2021",
-    title: "Full Stack Engineer",
-    company: "Kushel Digi Solution",
-    companyUrl: "https://www.kusheldigi.com/",
-    description:
-      "Contributed to projects like an HR Management System, E-Commerce platform, and Hospital Management System, improving overall efficiency by 25%. I also translated Figma designs into functional web interfaces, reducing development time by 15%.",
-    technologies: [
-      "React",
-      "Next.Js",
-      "Node.Js",
-      "Figma",
-      "MongoDB",
-      "Tailwind",
-      "Express.Js",
-    ],
-    logo: "/logos/kds.webp",
-  },
-  {
-    dates: "Febuary 2021 — August 2021",
+    dates: "January 2022 — September 2023",
     title: "Full Stack Engineer",
     company: "Xamnation",
     companyUrl: "https://www.xamnation.com/",
-    description:
-      "Developed an E-Learning platform with a robust backend, leading to an 80% increase in student engagement. I also led a team of six, managing workflows and deadlines effectively, ensuring 100% on-time project delivery.",
+    description: [
+      "✔ Built a blog system for the frontend dynamic content interactions. Tech stack includes Node.js, Express, MongoDB with nested comment/reply schemas, boosting engagement by 80% and traffic by 55%. Developed React-based admin panel with RESTful APIs for CRUD, streamlining user management. Led six-person Scrum team, achieving 100% on-time delivery.",
+      "✔ Developed an E-Learning platform using Node.js, Express, PostgreSQL, WebSocket for real-time quiz APIs, Redis for caching, AWS S3 for content storage, and React for interactive UI, integrating JWT for secure authentication and Docker for deployment, increasing student engagement by 80%.",
+      "✔ Developed a backend panel for quiz content writers. Tech stack includes TypeScript, CKEditor, along with Grammarly API improving content accuracy by 40%. Implemented heartbeat API, WebSocket, Google Authenticator, Dialogflow ChatBot, email OTP with Node.js, Redis, enhancing security and interaction by 50%."
+    ],
     technologies: [
       "React",
       "Next.Js",
@@ -94,22 +66,4 @@ export const EXPERIENCE: ExperienceProp[] = [
     ],
     logo: "/logos/xamnation.webp"
   },
-  {
-    dates: "August 2020 — January 2021",
-    title: "Full Stack Engineer",
-    company: "Krishak Veda LLP",
-    companyUrl: "https://www.f6s.com/company/krishak-veda",
-    description:
-      "Developed and implemented a robust blog system with comment and reply functionality, increasing website engagement by 80% and boosting organic traffic by 55%. Also designed and integrated admin panels, streamlining operations and improving user management.",
-    technologies: [
-      "React",
-      "Next.Js",
-      "Node.Js",
-      "Figma",
-      "MongoDB",
-      "Tailwind",
-      "Express.Js",
-    ],
-    logo: "/logos/krishakveda.webp"
-  }
 ];

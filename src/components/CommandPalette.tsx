@@ -10,7 +10,7 @@ const navigation = [
 
 const social = [
   { name: 'GitHub', href: 'https://github.com/hiten36/', icon: '⌨️' },
-  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/hiten-khatri-63899b198/', icon: '💼' },
+  { name: 'LinkedIn', href: 'https://www.linkedin.com/in/hiten-khatri/', icon: '💼' },
   { name: 'Twitter', href: 'https://x.com/Hiten17424005', icon: '🐦' },
   { name: 'Resume', href: './Hiten_Khatri-CV.pdf', icon: '📄' },
 ]
