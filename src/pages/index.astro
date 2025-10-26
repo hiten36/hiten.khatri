@@ -14,34 +14,38 @@ import { SKILLS } from "../data/skills";
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "Person",
-  "name": "Hiten Khatri",
-  "jobTitle": "Full Stack Engineer",
-  "url": "https://hitenkhatri.vercel.app/",
-  "sameAs": [
+  name: "Hiten Khatri",
+  jobTitle: "Full Stack Engineer",
+  url: "https://hitenkhatri.vercel.app/",
+  sameAs: [
     "https://github.com/hiten36/",
     "https://www.linkedin.com/in/hiten-khatri/",
     "https://x.com/Hiten17424005",
-    "https://www.instagram.com/hiten_khatri/"
+    "https://www.instagram.com/hiten_khatri/",
   ],
-  "knowsAbout": [
+  knowsAbout: [
     "React",
     "Node.js",
     "MongoDB",
     "Express.js",
     "Next.js",
-    "Full Stack Development"
-  ]
+    "Full Stack Development",
+  ],
 };
 ---
 
 <Layout title="Hiten Khatri | Full Stack Software Engineer">
-  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
-  
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify(structuredData)}
+  />
+
   <div class="relative hero z-10">
     <div
       class="mx-auto min-h-screen max-w-screen-2xl px-6 py-12 font-sans md:px-12 md:py-20 lg:px-16 lg:py-0"
     >
-      <div class="lg:flex lg:justify-between lg:gap-4">
+      ...
+      <!-- <div class="lg:flex lg:justify-between lg:gap-4">
         <header
           class="lg:sticky lg:top-0 lg:flex lg:max-h-screen lg:w-1/2 lg:flex-col lg:justify-between lg:py-12"
         >
@@ -86,7 +90,7 @@ const structuredData = {
                 <h2
                   class="mt-2 text-sm lg:text-lg font-medium text-neutral-300"
                 >
-                  Software Engineer
+                  Senior Software Engineer
                 </h2>
 
                 <div id="desktop-contact">
@@ -262,7 +266,12 @@ const structuredData = {
 
             <div class="mb-4 space-y-4 text-[16px]" style="line-height: 23px;">
               <p>
-                Full-Stack Software Engineer with 3+ years of experience building scalable web applications across domains like QSR, Healthcare, Social Media, Ride-Sharing, and Fintech. Proficient in React, Next.js, Redux, Zustand, Firebase, Node.js, Express.js, Fastify.js, MongoDB, PostgreSQL, Javascript and TypeScript.
+                Full-Stack Software Engineer with 3+ years of experience
+                building scalable web applications across domains like QSR,
+                Healthcare, Social Media, Ride-Sharing, and Fintech. Proficient
+                in React, Next.js, Redux, Zustand, Firebase, Node.js,
+                Express.js, Fastify.js, MongoDB, PostgreSQL, Javascript and
+                TypeScript.
               </p>
 
               <p>
@@ -299,9 +308,9 @@ const structuredData = {
             </div>
           </section>
 
-          <section 
-            id="skills" 
-            class="mt-16 scroll-mt-16 md:mb-24 lg:mb-10 lg:scroll-mt-24" 
+          <section
+            id="skills"
+            class="mt-16 scroll-mt-16 md:mb-24 lg:mb-10 lg:scroll-mt-24"
             aria-label="Skills"
           >
             <div class="custom_heading custom_heading1">
@@ -312,61 +321,73 @@ const structuredData = {
               <div class="skill-category">
                 <h4 class="text-orange-600 font-semibold mb-2">Frontend</h4>
                 <div class="flex flex-wrap gap-2">
-                  {SKILLS.frontend.map((skill) => (
-                    <span class="skill-pill px-2 pb-0.5 bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
-                      <span class="relative z-10 text-xs">{skill}</span>
-                      <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                    </span>
-                  ))}
+                  {
+                    SKILLS.frontend.map((skill) => (
+                      <span class="skill-pill px-2 pb-0.5 bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
+                        <span class="relative z-10 text-xs">{skill}</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      </span>
+                    ))
+                  }
                 </div>
               </div>
 
               <div class="skill-category">
                 <h4 class="text-orange-600 font-semibold mb-2">Backend</h4>
                 <div class="flex flex-wrap gap-2">
-                  {SKILLS.backend.map((skill) => (
-                    <span class="skill-pill px-3 pb-0.5 text-sm bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
-                      <span class="relative z-10 text-xs">{skill}</span>
-                      <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                    </span>
-                  ))}
+                  {
+                    SKILLS.backend.map((skill) => (
+                      <span class="skill-pill px-3 pb-0.5 text-sm bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
+                        <span class="relative z-10 text-xs">{skill}</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      </span>
+                    ))
+                  }
                 </div>
               </div>
 
               <div class="skill-category">
-                <h4 class="text-orange-600 font-semibold mb-2">Tools & DevOps</h4>
+                <h4 class="text-orange-600 font-semibold mb-2">
+                  Tools & DevOps
+                </h4>
                 <div class="flex flex-wrap gap-2">
-                  {SKILLS.toolsAndDevOps.map((skill) => (
-                    <span class="skill-pill px-3 pb-0.5 text-sm bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
-                      <span class="relative z-10 text-xs">{skill}</span>
-                      <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                    </span>
-                  ))}
+                  {
+                    SKILLS.toolsAndDevOps.map((skill) => (
+                      <span class="skill-pill px-3 pb-0.5 text-sm bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
+                        <span class="relative z-10 text-xs">{skill}</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      </span>
+                    ))
+                  }
                 </div>
               </div>
 
               <div class="skill-category">
                 <h4 class="text-orange-600 font-semibold mb-2">Other</h4>
                 <div class="flex flex-wrap gap-2">
-                  {SKILLS.other.map((skill) => (
-                    <span class="skill-pill px-3 pb-0.5 text-sm bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
-                      <span class="relative z-10 text-xs">{skill}</span>
-                      <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
-                    </span>
-                  ))}
+                  {
+                    SKILLS.other.map((skill) => (
+                      <span class="skill-pill px-3 pb-0.5 text-sm bg-neutral-900/50 border border-neutral-700/50 rounded-md hover:border-orange-600/50 transition-all duration-300 cursor-default relative overflow-hidden group">
+                        <span class="relative z-10 text-xs">{skill}</span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-orange-600/10 to-orange-600/20 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
+                      </span>
+                    ))
+                  }
                 </div>
               </div>
             </div>
           </section>
 
-          <footer class="footer max-w-md pb-16 mt-16 text-sm text-neutral-300 sm:pb-0">
+          <footer
+            class="footer max-w-md pb-16 mt-16 text-sm text-neutral-300 sm:pb-0"
+          >
             <p>
               If you can read this, I’ve probably fixed the bugs... or created
               new ones!
             </p>
           </footer>
         </main>
-      </div>
+      </div> -->
     </div>
 
     <CommandPalette client:load />

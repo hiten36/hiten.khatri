@@ -2,17 +2,45 @@ import type { Props as ExperienceProp } from "../components/experience/props";
 
 export const EXPERIENCE: ExperienceProp[] = [
   {
-    dates: "July 2024 — Present",
-    title: "Frontend Engineer",
+    dates: "October 2025 — Present",
+    title: "Senior Software Engineer",
+    company: "Celebal",
+    companyUrl: "https://celebaltech.com/",
+    description: [
+
+    ],
+    technologies: [
+      "React",
+      "Redux",
+      "Node.Js",
+      "Express.Js",
+      "MongoDB",
+      "Tailwind",
+      "Zustand",
+      "TanStack",
+      "Next.Js",
+      "Typescript",
+      "Google Cloud",
+      "Material UI"
+    ],
+    logo: "/logos/celebal.webp",
+  },
+  {
+    dates: "July 2024 — September 2025",
+    title: "Software Engineer",
     company: "Appinventiv",
     companyUrl: "https://appinventiv.com/",
     description: [
-      "✔ Engineered scalable user journeys for non-delivery modes (Dine-In, Carhop, Drive-Thru, Pickup) across KFC, Pizza Hut, and Hardee's, boosting order completion flow by 35%. Developed critical pages (Checkout, Payment, Thank You, Home) using React, TypeScript, Redux, MUI, with multi-region and multi-language support. Integrated Firebase for real-time order handling (BSP & SDM) and implemented BFF architecture, enhancing API performance and security by 75%.",
+      "✔ Engineered scalable user journeys for non-delivery modes (Dine-In, Carhop, Drive-Thru, Pickup) across KFC, Pizza Hut, and Hardee's, boosting order completion flow by 35%. Developed critical pages (Checkout, Payment, Thank You, Home) using React, Node.js, TypeScript, Redux, MUI, with multi-region and multi-language support. Integrated Firebase for real-time order handling (BSP & SDM) and implemented BFF architecture, enhancing API performance and security by 75%.",
       "✔ Built a shared UI library, reducing UI rework by 40%. In a healthcare project, built a doctor-patient platform with video consultations, real-time chat, medicine delivery, and payments, increasing engagement by 45%. Used TanStack Query, Zustand, TypeScript, and custom hooks to improve data handling and reduce booking errors by 40%, while delivering a responsive, accessible UI via Tailwind CSS and TanStack Router."
     ],
     technologies: [
       "React",
       "Redux",
+      "Node.Js",
+      "Express.Js",
+      "MongoDB",
+      "Tailwind",
       "Zustand",
       "TanStack",
       "Next.Js",
