@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro";
+import MarkdownWorkspace from "../components/markdown/MarkdownWorkspace";
+import "../styles/global.css";
+import "../styles/markdown.css";
+---
+
+<Layout
+  title="Markdown Studio | Hiten Khatri"
+  description="Write, upload, preview, and save Markdown notes locally in your browser with beautiful Comark rendering."
+  particles={false}
+>
+  <MarkdownWorkspace client:only="react" />
+</Layout>
+
+<script is:inline>
+  (() => {
+    try {
+      const key = "hiten.md.theme.v1";
+      const stored = localStorage.getItem(key);
+      const theme =
+        stored === "light" || stored === "dark"
+          ? stored
+          : window.matchMedia("(prefers-color-scheme: light)").matches
+            ? "light"
+            : "dark";
+      document.documentElement.dataset.mdTheme = theme;
+    } catch {}
+  })();
+</script>

@@ -1,0 +1,353 @@
+/* Page shell — overrides portfolio body while on /markdown */
+html[data-md-theme="light"] body {
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(234, 88, 12, 0.08), transparent 55%),
+    radial-gradient(900px 500px at 100% 0%, rgba(14, 165, 233, 0.06), transparent 50%),
+    #f4f1ec !important;
+  color: #1c1917 !important;
+}
+
+html[data-md-theme="dark"] body {
+  background:
+    radial-gradient(1000px 500px at 0% 0%, rgba(234, 88, 12, 0.08), transparent 50%),
+    #000 !important;
+  color: #e5e5e5 !important;
+}
+
+.md-studio {
+  --md-bg: #050505;
+  --md-surface: rgba(10, 10, 10, 0.72);
+  --md-surface-strong: rgba(10, 10, 10, 0.88);
+  --md-panel: rgba(23, 23, 23, 0.55);
+  --md-border: #262626;
+  --md-border-strong: rgba(64, 64, 64, 0.7);
+  --md-text: #f5f5f5;
+  --md-text-muted: #a3a3a3;
+  --md-text-soft: #737373;
+  --md-accent: #ea580c;
+  --md-accent-soft: rgba(234, 88, 12, 0.15);
+  --md-input: rgba(23, 23, 23, 0.7);
+  --md-hover: #171717;
+  --md-danger-border: rgba(127, 29, 29, 0.5);
+  --md-danger-text: #fca5a5;
+  --md-danger-hover: rgba(69, 10, 10, 0.4);
+  --md-code-bg: rgba(64, 64, 64, 0.45);
+  --md-code-border: rgba(115, 115, 115, 0.35);
+  --md-code-text: #fdba74;
+  --md-pre-bg: #0a0a0a;
+  --md-table-border: #333;
+  --md-table-head: rgba(234, 88, 12, 0.12);
+  --md-table-stripe: rgba(23, 23, 23, 0.6);
+  --md-quote: #a3a3a3;
+  --md-prose: #d4d4d4;
+  --md-prose-heading: #f5f5f5;
+  --md-prose-strong: #fafafa;
+  --md-hr: #333;
+  --md-toggle-track: #262626;
+  --md-toggle-thumb: #fafafa;
+  color: var(--md-text);
+}
+
+.md-studio[data-theme="light"] {
+  --md-bg: transparent;
+  --md-surface: rgba(255, 252, 248, 0.82);
+  --md-surface-strong: rgba(255, 255, 255, 0.92);
+  --md-panel: rgba(255, 255, 255, 0.7);
+  --md-border: #e7e0d6;
+  --md-border-strong: #d6cfc4;
+  --md-text: #1c1917;
+  --md-text-muted: #57534e;
+  --md-text-soft: #78716c;
+  --md-accent: #c2410c;
+  --md-accent-soft: rgba(194, 65, 12, 0.12);
+  --md-input: #fff;
+  --md-hover: #f5f0e8;
+  --md-danger-border: rgba(185, 28, 28, 0.35);
+  --md-danger-text: #b91c1c;
+  --md-danger-hover: rgba(254, 226, 226, 0.8);
+  --md-code-bg: #f3eee6;
+  --md-code-border: #e4dcd0;
+  --md-code-text: #9a3412;
+  --md-pre-bg: #1c1917;
+  --md-table-border: #e4dcd0;
+  --md-table-head: rgba(194, 65, 12, 0.1);
+  --md-table-stripe: rgba(245, 240, 232, 0.8);
+  --md-quote: #78716c;
+  --md-prose: #44403c;
+  --md-prose-heading: #1c1917;
+  --md-prose-strong: #0c0a09;
+  --md-hr: #e7e0d6;
+  --md-toggle-track: #e7e0d6;
+  --md-toggle-thumb: #fff7ed;
+}
+
+/* Theme toggle */
+.md-theme-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 4.25rem;
+  height: 2.15rem;
+  padding: 0.2rem;
+  border-radius: 999px;
+  border: 1px solid var(--md-border-strong);
+  background: var(--md-toggle-track);
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.md-theme-toggle:focus-visible {
+  outline: 2px solid var(--md-accent);
+  outline-offset: 2px;
+}
+
+.md-theme-toggle__icons {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.55rem;
+  pointer-events: none;
+  color: var(--md-text-soft);
+}
+
+.md-theme-toggle__icons svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.md-studio[data-theme="light"] .md-theme-toggle__icons .icon-sun {
+  color: #c2410c;
+  opacity: 1;
+}
+
+.md-studio[data-theme="light"] .md-theme-toggle__icons .icon-moon {
+  opacity: 0.35;
+}
+
+.md-studio[data-theme="dark"] .md-theme-toggle__icons .icon-moon {
+  color: #fdba74;
+  opacity: 1;
+}
+
+.md-studio[data-theme="dark"] .md-theme-toggle__icons .icon-sun {
+  opacity: 0.35;
+}
+
+.md-theme-toggle__thumb {
+  position: relative;
+  z-index: 1;
+  width: 1.65rem;
+  height: 1.65rem;
+  border-radius: 999px;
+  background: var(--md-toggle-thumb);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.18),
+    0 4px 10px rgba(234, 88, 12, 0.18);
+  transform: translateX(0);
+  transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.md-studio[data-theme="dark"] .md-theme-toggle__thumb {
+  transform: translateX(2.05rem);
+  background: linear-gradient(145deg, #292524, #171717);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(251, 146, 60, 0.25);
+}
+
+/* Prose */
+.md-prose {
+  color: var(--md-prose);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 72ch;
+}
+
+.md-prose :where(h1, h2, h3, h4, h5, h6) {
+  color: var(--md-prose-heading);
+  font-family: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 1.25;
+  margin-top: 1.6em;
+  margin-bottom: 0.6em;
+  letter-spacing: -0.01em;
+}
+
+.md-prose h1 {
+  font-size: 2rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--md-accent) 40%, transparent);
+  padding-bottom: 0.35em;
+}
+
+.md-prose h2 {
+  font-size: 1.45rem;
+}
+
+.md-prose h3 {
+  font-size: 1.2rem;
+}
+
+.md-prose p {
+  margin: 0.9em 0;
+}
+
+.md-prose a {
+  color: var(--md-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.md-prose a:hover {
+  filter: brightness(1.15);
+}
+
+.md-prose strong {
+  color: var(--md-prose-strong);
+  font-weight: 700;
+}
+
+.md-prose em {
+  color: var(--md-text-muted);
+}
+
+.md-prose blockquote {
+  margin: 1.2em 0;
+  padding: 0.2em 0 0.2em 1em;
+  border-left: 3px solid var(--md-accent);
+  color: var(--md-quote);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--md-accent) 10%, transparent),
+    transparent 70%
+  );
+}
+
+.md-prose ul,
+.md-prose ol {
+  margin: 0.9em 0;
+  padding-left: 1.4em;
+}
+
+.md-prose li {
+  margin: 0.35em 0;
+}
+
+.md-prose li::marker {
+  color: var(--md-accent);
+}
+
+.md-prose hr {
+  border: 0;
+  border-top: 1px solid var(--md-hr);
+  margin: 2em 0;
+}
+
+.md-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.88em;
+  background: var(--md-code-bg);
+  border: 1px solid var(--md-code-border);
+  border-radius: 0.35rem;
+  padding: 0.1em 0.35em;
+  color: var(--md-code-text);
+}
+
+.md-prose pre {
+  margin: 1.2em 0;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  border: 1px solid var(--md-border);
+  background: var(--md-pre-bg) !important;
+}
+
+.md-prose pre code {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
+
+.md-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.2em 0;
+  font-size: 0.9em;
+  overflow: hidden;
+  border-radius: 0.5rem;
+}
+
+.md-prose th,
+.md-prose td {
+  border: 1px solid var(--md-table-border);
+  padding: 0.55em 0.75em;
+  text-align: left;
+}
+
+.md-prose th {
+  background: var(--md-table-head);
+  color: var(--md-prose-heading);
+  font-weight: 600;
+}
+
+.md-prose tr:nth-child(even) td {
+  background: var(--md-table-stripe);
+}
+
+.md-prose img {
+  max-width: 100%;
+  border-radius: 0.75rem;
+  margin: 1em 0;
+  opacity: 1 !important;
+}
+
+.md-prose input[type="checkbox"] {
+  margin-right: 0.45em;
+  accent-color: var(--md-accent);
+}
+
+.md-prose .katex-display {
+  margin: 1.2em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.md-prose .shiki,
+.md-prose pre.shiki {
+  background: var(--md-pre-bg) !important;
+}
+
+/* Dual-theme Shiki: show light/dark code tokens by studio theme */
+.md-studio[data-theme="light"] .md-prose .shiki,
+.md-studio[data-theme="light"] .md-prose .shiki span {
+  color: var(--shiki-light) !important;
+  background-color: var(--shiki-light-bg, transparent) !important;
+  font-style: var(--shiki-light-font-style) !important;
+  font-weight: var(--shiki-light-font-weight) !important;
+  text-decoration: var(--shiki-light-text-decoration) !important;
+}
+
+.md-studio[data-theme="dark"] .md-prose .shiki,
+.md-studio[data-theme="dark"] .md-prose .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: var(--shiki-dark-bg, transparent) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+.md-studio[data-theme="light"] .md-prose .shiki,
+.md-studio[data-theme="light"] .md-prose pre.shiki {
+  background: #f8f5f0 !important;
+  border-color: var(--md-border);
+}
+
+.md-studio[data-theme="light"] .md-prose .katex {
+  color: var(--md-prose);
+}

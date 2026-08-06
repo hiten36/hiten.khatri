@@ -1,40 +1,56 @@
 ---
+import { Font } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import SparklesCore from "../components/SparklesCore.tsx";
+import avatar from "../assets/avatar.webp";
+
 interface Props {
   title: string;
   description?: string;
-  image?: string;
+  image?: ImageMetadata;
+  particles?: boolean;
 }
 
 const {
   title,
   description = "Explore the portfolio of Hiten Khatri, a passionate Full Stack Engineer specializing in modern technologies like React.js, Node.js, Next.js and MERN Stack. Showcasing innovative projects, skills, and expertise in building dynamic and scalable applications",
-  image = "/avatar.webp",
+  image = avatar,
+  particles = true,
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(image.src, Astro.site);
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
-    <meta name="google-site-verification" content="T18-q4U5mil9mlLw1tdzJbvD-cNwLDKJniIMUQzrG5g" />
+    <meta
+      name="google-site-verification"
+      content="T18-q4U5mil9mlLw1tdzJbvD-cNwLDKJniIMUQzrG5g"
+    />
 
     <meta name="author" content="Hiten Khatri" />
-    <meta name="keywords" content="full stack developer, MERN stack, React developer, Node.js developer, web development, software engineer" />
+    <meta
+      name="keywords"
+      content="full stack developer, MERN stack, React developer, Node.js developer, web development, software engineer"
+    />
 
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={new URL(image, Astro.url)} />
-    <meta property="og:image:alt" content="Hiten Khatri - Full Stack Engineer" />
+    <meta property="og:image" content={socialImage} />
+    <meta
+      property="og:image:alt"
+      content="Hiten Khatri - Full Stack Engineer"
+    />
     <meta property="og:site_name" content="Hiten Khatri Portfolio" />
 
     <meta name="twitter:card" content="summary_large_image" />
@@ -42,7 +58,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <meta name="twitter:url" content={canonicalURL} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={new URL(image, Astro.url)} />
+    <meta name="twitter:image" content={socialImage} />
 
     <meta name="theme-color" content="#000000" />
     <meta name="mobile-web-app-capable" content="yes" />
@@ -53,9 +69,8 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <link rel="icon" type="image/webp" href="/favicon.webp" />
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon.webp" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Space+Grotesk:wght@300..700&display=swap" />
+    <Font cssVariable="--font-nunito" preload />
+    <Font cssVariable="--font-space-grotesk" preload />
 
     <title>{title}</title>
   </head>
@@ -63,20 +78,22 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <body
     class="bg-black leading-relaxed text-neutral-200 tracking-wide antialiased selection:bg-neutral-300 selection:text-neutral-900 z-10 relative"
   >
-    <SparklesCore
-      client:idle
-      id="tsparticlesfullpage"
-      background="transparent"
-      minSize={0.6}
-      maxSize={1.2}
-      opacity={0.2}
-      particleDensity={45}
-      className="w-full h-full fixed z-0"
-      particleColor="#FFFFFF"
-      opacity={0.6}
-      speed={0.5}
-      client:only="react"
-    />
+    {
+      particles && (
+        <SparklesCore
+          client:idle
+          id="tsparticlesfullpage"
+          background="transparent"
+          minSize={0.6}
+          maxSize={1.2}
+          particleDensity={45}
+          className="w-full h-full fixed z-0"
+          particleColor="#FFFFFF"
+          opacity={0.6}
+          speed={0.5}
+        />
+      )
+    }
     <slot />
     <script src="../scripts/main.ts"></script>
     <script>
@@ -99,7 +116,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
   <style is:global>
     html {
-      font-family: system-ui, sans-serif;
+      font-family: var(--font-nunito), system-ui, sans-serif;
       background-size: 224px;
       font-size: 1.125rem;
     }

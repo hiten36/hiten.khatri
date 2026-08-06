@@ -1,4 +1,5 @@
 ---
+import { Image } from "astro:assets";
 import Experience from "../components/experience/index.astro";
 import Project from "../components/project/index.astro";
 import Social from "../components/social/index.astro";
@@ -10,6 +11,7 @@ import Layout from "../layouts/Layout.astro";
 import LocationIcon from "../components/icons/location.astro";
 import "../styles/global.css";
 import { SKILLS } from "../data/skills";
+import avatar from "../assets/avatar.webp";
 
 const structuredData = {
   "@context": "https://schema.org",
@@ -34,8 +36,9 @@ const structuredData = {
 };
 ---
 
-<!-- <Layout title="Hiten Khatri | Full Stack Software Engineer">
+<Layout title="Hiten Khatri | Full Stack Software Engineer">
   <script
+    is:inline
     type="application/ld+json"
     set:html={JSON.stringify(structuredData)}
   />
@@ -73,19 +76,21 @@ const structuredData = {
             <div
               class="flex lg:items-start gap-4 flex-col lg:flex-row items-center text-center lg:text-left"
             >
-              <img
-                src="/avatar.webp"
+              <Image
+                src={avatar}
                 alt="Hiten Khatri"
+                width={160}
+                height={134}
                 class="w-40 h-[8.35rem] rounded-lg"
+                loading="eager"
+                fetchpriority="high"
+                densities={[1, 2]}
               />
 
               <div class="bottom-[7px] relative">
-                <a
-                  href="/"
-                  class="text-4xl lg:text-5xl block font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400 bg-opacity-50"
-                >
-                  <h1 class="brand">Hiten Khatri</h1>
-                </a>
+                <h1 class="brand text-4xl lg:text-5xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
+                  <a href="/">Hiten Khatri</a>
+                </h1>
                 <h2
                   class="mt-2 text-sm lg:text-lg font-medium text-neutral-300"
                 >
@@ -100,10 +105,10 @@ const structuredData = {
                     aria-label="Contact Me"
                   >
                     <span>Contact me</span>
-                    <sapn
+                    <span
                       class="w-2 h-2 rounded-full bg-green-400 duration-1000 animate-pulse"
                     >
-                    </sapn>
+                    </span>
                   </a>
 
                   <div class="resume-section">
@@ -389,24 +394,15 @@ const structuredData = {
       </div>
     </div>
 
-    <CommandPalette client:load />
+    <CommandPalette client:idle />
   </div>
 
   <footer class="text-center py-4 text-xs">
     {new Date().getFullYear()} All rights reserved.
   </footer>
-</Layout> -->
+</Layout>
 
-<style scoped>
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-
+<style>
   .hero {
     background-image: url(/pattern.svg);
     background-position: top center;

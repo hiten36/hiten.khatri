@@ -6,6 +6,7 @@ const navigation = [
   { name: 'Experience', href: '#work-experience', icon: '💼' },
   { name: 'Projects', href: '#projects', icon: '🚀' },
   { name: 'Skills', href: '#skills', icon: '🛠️' },
+  { name: 'Markdown Studio', href: '/markdown', icon: '📝' },
 ]
 
 const social = [
@@ -93,6 +94,8 @@ export default function CommandPalette() {
                         setIsOpen(false)
                         if (item.href.startsWith('#')) {
                           document.querySelector(item.href)?.scrollIntoView({ behavior: 'smooth' })
+                        } else if (item.href.startsWith('/')) {
+                          window.location.assign(item.href)
                         } else {
                           window.open(item.href, '_blank')
                         }
