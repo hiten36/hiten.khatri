@@ -1,0 +1,25 @@
+{
+  "found": {
+    "burpee": "https://fitnessprogramer.com/wp-content/uploads/2021/02/burpees.gif",
+    "battle-ropes": "https://fitnessprogramer.com/wp-content/uploads/2015/07/Battle-Rope.gif",
+    "side-plank": "https://fitnessprogramer.com/wp-content/uploads/2025/03/Side-Plank-Hip-Adduction-Copenhagen-adduction.gif",
+    "clean-and-press": "https://fitnessprogramer.com/wp-content/uploads/2021/04/Barbell-Clean-and-Press-.gif",
+    "hanging-leg-raise": "https://fitnessprogramer.com/wp-content/uploads/2021/05/Captains-Chair-Leg-Raise.gif",
+    "glute-kickback": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Donkey-Kicks.gif",
+    "kettlebell-swing": "https://fitnessprogramer.com/wp-content/uploads/2021/09/Kettlebell-Swings.gif",
+    "skull-crusher": "https://fitnessprogramer.com/wp-content/uploads/2021/06/Dumbbell-Skull-Crusher.gif",
+    "tricep-dip": "https://fitnessprogramer.com/wp-content/uploads/2021/02/Triceps-Dips.gif"
+  },
+  "miss": [
+    "box-jump",
+    "cable-woodchop",
+    "cat-cow",
+    "hollow-body-hold",
+    "medicine-ball-slam",
+    "pallof-press",
+    "pigeon-pose",
+    "thoracic-rotation",
+    "wall-sit",
+    "worlds-greatest-stretch"
+  ]
+}

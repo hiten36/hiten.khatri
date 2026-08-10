@@ -38,5 +38,15 @@ export const PROJECTS = [
             "Enhances trading decisions with comprehensive market data"
         ],
         "url": "https://equitymafia.com/"
+    },
+    {
+        "name": "Workout Intelligence Hub",
+        "isActive": true,
+        "description": "Local-first workout planner with recommended programs, session logging, PR tracking, and a 100+ exercise form catalogue.",
+        "highlights": [
+            "Day-wise plans, coach questionnaire, and live workout logging",
+            "Progress analytics and curated 3D form demos — all in localStorage"
+        ],
+        "url": "/workout"
     }
 ];

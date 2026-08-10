@@ -2,6 +2,8 @@ import { MarkdownClient } from "@comark/react";
 import math from "@comark/react/plugins/math";
 import shiki from "@comark/react/plugins/shiki";
 import {
+  ChevronDown,
+  ChevronUp,
   Download,
   FilePlus,
   FileUp,
@@ -9,17 +11,23 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Save,
+  Search,
   Sun,
   Trash2,
 } from "lucide-react";
+import Fuse from "fuse.js";
 import {
   useCallback,
   useEffect,
+  useMemo,
   useRef,
   useState,
+  type AnchorHTMLAttributes,
   type ChangeEvent,
+  type ReactNode,
 } from "react";
 import { cn } from "../../utils/cn";
+import { enhanceMarkdownWithApiTryLinks } from "../../utils/markdown-api-links";
 import {
   SAMPLE_MARKDOWN,
   createMarkdownDoc,
@@ -44,6 +52,31 @@ const MD_PLUGINS = [
   }),
   math(),
 ];
+
+function MdLink({
+  href,
+  children,
+  className,
+  ...props
+}: AnchorHTMLAttributes<HTMLAnchorElement> & { children?: ReactNode }) {
+  const isApiTry = Boolean(href?.includes("/api-client#try="));
+
+  return (
+    <a
+      {...props}
+      href={href}
+      className={cn(className, isApiTry && "md-api-try__link")}
+      target={isApiTry ? "_blank" : props.target}
+      rel={isApiTry ? "noopener noreferrer" : props.rel}
+    >
+      {children}
+    </a>
+  );
+}
+
+const MD_COMPONENTS = {
+  a: MdLink,
+};
 
 type ViewMode = "split" | "edit" | "preview";
 
@@ -82,8 +115,115 @@ export default function MarkdownWorkspace() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [viewMode, setViewMode] = useState<ViewMode>("split");
   const [status, setStatus] = useState<string | null>(null);
+  const [notesQuery, setNotesQuery] = useState("");
+  const [findQuery, setFindQuery] = useState("");
+  const [findIndex, setFindIndex] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const editorRef = useRef<HTMLTextAreaElement>(null);
+  const previewRef = useRef<HTMLDivElement>(null);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const previewContent = useMemo(
+    () => enhanceMarkdownWithApiTryLinks(content),
+    [content],
+  );
+
+  const notesFuse = useMemo(
+    () =>
+      new Fuse(docs, {
+        keys: [
+          { name: "title", weight: 0.7 },
+          { name: "content", weight: 0.3 },
+        ],
+        threshold: 0.4,
+        ignoreLocation: true,
+      }),
+    [docs],
+  );
+
+  const filteredDocs = useMemo(() => {
+    const q = notesQuery.trim();
+    if (!q) return docs;
+    return notesFuse.search(q).map((hit) => hit.item);
+  }, [docs, notesFuse, notesQuery]);
+
+  const findMatches = useMemo(() => {
+    const q = findQuery.trim();
+    if (!q) return [] as number[];
+    const haystack = content.toLowerCase();
+    const needle = q.toLowerCase();
+    const indexes: number[] = [];
+    let from = 0;
+    while (from <= haystack.length) {
+      const at = haystack.indexOf(needle, from);
+      if (at === -1) break;
+      indexes.push(at);
+      from = at + Math.max(needle.length, 1);
+    }
+    return indexes;
+  }, [content, findQuery]);
+
+  useEffect(() => {
+    setFindIndex(-1);
+  }, [findQuery, activeId]);
+
+  const jumpToMatch = useCallback(
+    (nextIndex: number) => {
+      if (!findMatches.length) return;
+      const safe =
+        ((nextIndex % findMatches.length) + findMatches.length) %
+        findMatches.length;
+      setFindIndex(safe);
+      const start = findMatches[safe]!;
+      const end = start + findQuery.trim().length;
+
+      const editor = editorRef.current;
+      if (editor && (viewMode === "edit" || viewMode === "split")) {
+        editor.focus();
+        editor.setSelectionRange(start, end);
+        const lineHeight = 22;
+        const before = content.slice(0, start);
+        const line = before.split("\n").length - 1;
+        editor.scrollTop = Math.max(
+          0,
+          line * lineHeight - editor.clientHeight / 3,
+        );
+      }
+
+      const preview = previewRef.current;
+      if (preview && (viewMode === "preview" || viewMode === "split")) {
+        const needle = findQuery.trim();
+        if (!needle) return;
+        const walker = document.createTreeWalker(
+          preview,
+          NodeFilter.SHOW_TEXT,
+        );
+        let node = walker.nextNode();
+        let remaining = safe;
+        const needleLower = needle.toLowerCase();
+        while (node) {
+          const text = node.textContent ?? "";
+          const lower = text.toLowerCase();
+          let pos = 0;
+          while (true) {
+            const at = lower.indexOf(needleLower, pos);
+            if (at === -1) break;
+            if (remaining === 0) {
+              node.parentElement?.scrollIntoView({
+                block: "center",
+                behavior: "smooth",
+              });
+              return;
+            }
+            remaining -= 1;
+            pos = at + Math.max(needle.length, 1);
+          }
+          node = walker.nextNode();
+        }
+      }
+    },
+    [content, findMatches, findQuery, viewMode],
+  );
 
   const refreshDocs = useCallback(() => {
     setDocs(listMarkdownDocs());
@@ -313,46 +453,73 @@ export default function MarkdownWorkspace() {
                   New
                 </button>
               </div>
+              <label className="relative mb-2 block">
+                <Search
+                  className="pointer-events-none absolute top-1/2 left-2 h-3.5 w-3.5 -translate-y-1/2 opacity-60"
+                  style={{ color: "var(--md-text-soft)" }}
+                />
+                <input
+                  value={notesQuery}
+                  onChange={(e) => setNotesQuery(e.target.value)}
+                  placeholder="Search notes…"
+                  aria-label="Search notes"
+                  className="w-full rounded-md border py-1.5 pr-2 pl-7 text-xs outline-none ring-[color-mix(in_srgb,var(--md-accent)_40%,transparent)] focus:ring-1"
+                  style={{
+                    borderColor: "var(--md-border)",
+                    background: "var(--md-input)",
+                    color: "var(--md-text)",
+                  }}
+                />
+              </label>
               <ul className="space-y-1 overflow-y-auto pr-1">
-                {docs.map((doc) => (
-                  <li key={doc.id}>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        if (dirty && activeId) persist();
-                        loadDoc(doc);
-                      }}
-                      className={cn(
-                        "w-full rounded-lg px-2.5 py-2 text-left transition",
-                        doc.id === activeId
-                          ? "ring-1"
-                          : "hover:bg-[var(--md-hover)]",
-                      )}
-                      style={
-                        doc.id === activeId
-                          ? {
-                              background: "var(--md-accent-soft)",
-                              boxShadow:
-                                "inset 0 0 0 1px color-mix(in srgb, var(--md-accent) 40%, transparent)",
-                            }
-                          : undefined
-                      }
-                    >
-                      <div
-                        className="truncate text-sm font-medium"
-                        style={{ color: "var(--md-text)" }}
-                      >
-                        {doc.title}
-                      </div>
-                      <div
-                        className="mt-0.5 text-[11px]"
-                        style={{ color: "var(--md-text-soft)" }}
-                      >
-                        {formatRelative(doc.updatedAt)}
-                      </div>
-                    </button>
+                {filteredDocs.length === 0 ? (
+                  <li
+                    className="px-2 py-3 text-xs"
+                    style={{ color: "var(--md-text-soft)" }}
+                  >
+                    No notes match.
                   </li>
-                ))}
+                ) : (
+                  filteredDocs.map((doc) => (
+                    <li key={doc.id}>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (dirty && activeId) persist();
+                          loadDoc(doc);
+                        }}
+                        className={cn(
+                          "w-full rounded-lg px-2.5 py-2 text-left transition",
+                          doc.id === activeId
+                            ? "ring-1"
+                            : "hover:bg-[var(--md-hover)]",
+                        )}
+                        style={
+                          doc.id === activeId
+                            ? {
+                                background: "var(--md-accent-soft)",
+                                boxShadow:
+                                  "inset 0 0 0 1px color-mix(in srgb, var(--md-accent) 40%, transparent)",
+                              }
+                            : undefined
+                        }
+                      >
+                        <div
+                          className="truncate text-sm font-medium"
+                          style={{ color: "var(--md-text)" }}
+                        >
+                          {doc.title}
+                        </div>
+                        <div
+                          className="mt-0.5 text-[11px]"
+                          style={{ color: "var(--md-text-soft)" }}
+                        >
+                          {formatRelative(doc.updatedAt)}
+                        </div>
+                      </button>
+                    </li>
+                  ))
+                )}
               </ul>
             </div>
           )}
@@ -393,7 +560,7 @@ export default function MarkdownWorkspace() {
                 setTitle(next);
                 scheduleAutosave(next, content);
               }}
-              className="min-w-[10rem] flex-1 rounded-md border px-3 py-2 text-sm font-semibold outline-none ring-[color-mix(in_srgb,var(--md-accent)_40%,transparent)] focus:ring-1"
+              className="min-w-[8rem] flex-1 rounded-md border px-3 py-2 text-sm font-semibold outline-none ring-[color-mix(in_srgb,var(--md-accent)_40%,transparent)] focus:ring-1"
               style={{
                 borderColor: "var(--md-border)",
                 background: "var(--md-input)",
@@ -402,6 +569,80 @@ export default function MarkdownWorkspace() {
               placeholder="Note title"
               aria-label="Note title"
             />
+
+            <div
+              className="flex min-w-[12rem] flex-1 items-center gap-1 rounded-md border px-2 py-1"
+              style={{
+                borderColor: "var(--md-border-strong)",
+                background: "var(--md-input)",
+              }}
+            >
+              <Search
+                className="h-3.5 w-3.5 shrink-0 opacity-60"
+                style={{ color: "var(--md-text-soft)" }}
+              />
+              <input
+                value={findQuery}
+                onChange={(e) => setFindQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    e.preventDefault();
+                    if (!findMatches.length) return;
+                    jumpToMatch(
+                      e.shiftKey
+                        ? findIndex < 0
+                          ? findMatches.length - 1
+                          : findIndex - 1
+                        : findIndex + 1,
+                    );
+                  }
+                  if (e.key === "Escape") {
+                    setFindQuery("");
+                    e.currentTarget.blur();
+                  }
+                }}
+                placeholder="Find in note…"
+                aria-label="Find in note"
+                className="min-w-0 flex-1 bg-transparent text-xs outline-none"
+                style={{ color: "var(--md-text)" }}
+              />
+              {findQuery.trim() ? (
+                <span
+                  className="shrink-0 text-[10px] tabular-nums"
+                  style={{ color: "var(--md-text-soft)" }}
+                >
+                  {findMatches.length
+                    ? findIndex < 0
+                      ? `–/${findMatches.length}`
+                      : `${findIndex + 1}/${findMatches.length}`
+                    : "0"}
+                </span>
+              ) : null}
+              <button
+                type="button"
+                className="rounded p-0.5 transition hover:bg-[var(--md-hover)] disabled:opacity-40"
+                style={{ color: "var(--md-text-muted)" }}
+                disabled={!findMatches.length}
+                aria-label="Previous match"
+                onClick={() =>
+                  jumpToMatch(
+                    findIndex < 0 ? findMatches.length - 1 : findIndex - 1,
+                  )
+                }
+              >
+                <ChevronUp className="h-3.5 w-3.5" />
+              </button>
+              <button
+                type="button"
+                className="rounded p-0.5 transition hover:bg-[var(--md-hover)] disabled:opacity-40"
+                style={{ color: "var(--md-text-muted)" }}
+                disabled={!findMatches.length}
+                aria-label="Next match"
+                onClick={() => jumpToMatch(findIndex + 1)}
+              >
+                <ChevronDown className="h-3.5 w-3.5" />
+              </button>
+            </div>
 
             <div
               className="flex rounded-md border p-0.5 text-xs"
@@ -506,6 +747,7 @@ export default function MarkdownWorkspace() {
                   Markdown source
                 </label>
                 <textarea
+                  ref={editorRef}
                   id="md-editor"
                   value={content}
                   onChange={(e) => {
@@ -522,11 +764,15 @@ export default function MarkdownWorkspace() {
             )}
 
             {(viewMode === "preview" || viewMode === "split") && (
-              <div className="min-h-[50vh] overflow-auto p-4 md:p-6">
+              <div
+                ref={previewRef}
+                className="min-h-[50vh] overflow-auto p-4 md:p-6"
+              >
                 {content.trim() ? (
                   <MarkdownClient
-                    value={content}
+                    value={previewContent}
                     plugins={MD_PLUGINS}
+                    components={MD_COMPONENTS}
                     className="md-prose"
                     streaming
                   />

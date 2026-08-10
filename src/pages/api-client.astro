@@ -1,0 +1,29 @@
+---
+export const prerender = true;
+
+import Layout from "../layouts/Layout.astro";
+import ApiClientWorkspace from "../components/api-client/ApiClientWorkspace";
+import "../styles/global.css";
+import "../styles/api-client.css";
+---
+
+<Layout
+  title="API Client | Hiten Khatri"
+  description="A local-first Postman-style API workspace with collections, environments, history, import/export, and a protected request proxy."
+  particles={false}
+>
+  <ApiClientWorkspace client:only="react" />
+</Layout>
+
+<script is:inline>
+  (() => {
+    try {
+      const key = "hiten.api.theme.v1";
+      const stored = localStorage.getItem(key);
+      document.documentElement.dataset.apiTheme =
+        stored === "light" || stored === "dark" ? stored : "light";
+    } catch {
+      document.documentElement.dataset.apiTheme = "light";
+    }
+  })();
+</script>

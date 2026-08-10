@@ -7,6 +7,8 @@ const navigation = [
   { name: 'Projects', href: '#projects', icon: '🚀' },
   { name: 'Skills', href: '#skills', icon: '🛠️' },
   { name: 'Markdown Studio', href: '/markdown', icon: '📝' },
+  { name: 'Workout Hub', href: '/workout', icon: '🏋️' },
+  { name: 'API Client', href: '/api-client', icon: '🛰️' },
 ]
 
 const social = [

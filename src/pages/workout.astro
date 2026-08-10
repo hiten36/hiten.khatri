@@ -1,0 +1,29 @@
+---
+export const prerender = true;
+
+import Layout from "../layouts/Layout.astro";
+import WorkoutHub from "../components/workout/WorkoutHub";
+import "../styles/global.css";
+import "../styles/workout.css";
+---
+
+<Layout
+  title="Workout Intelligence Hub | Hiten Khatri"
+  description="Plan day-wise workouts, get recommended programs, log performance and PRs, and study 100+ exercises with form guidance — all saved locally in your browser."
+  particles={false}
+>
+  <WorkoutHub client:only="react" />
+</Layout>
+
+<script is:inline>
+  (() => {
+    try {
+      const key = "hiten.wo.theme.v1";
+      const stored = localStorage.getItem(key);
+      document.documentElement.dataset.woTheme =
+        stored === "light" || stored === "dark" ? stored : "light";
+    } catch {
+      document.documentElement.dataset.woTheme = "light";
+    }
+  })();
+</script>
