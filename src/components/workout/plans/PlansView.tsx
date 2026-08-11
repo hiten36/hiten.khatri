@@ -135,33 +135,35 @@ export function PlansView() {
   };
 
   return (
-    <div className="space-y-4">
-      <SectionTitle
-        title="My Plans"
-        subtitle="Build day-wise programs, import templates, and set your active plan."
-        action={
-          <div className="flex flex-wrap gap-2">
-            <Button variant="primary" onClick={createBlank}>
-              New plan
-            </Button>
-            <Select
-              aria-label="Import template"
-              defaultValue=""
-              onChange={(e) => {
-                if (e.target.value) importTemplate(e.target.value);
-                e.target.value = "";
-              }}
-            >
-              <option value="">Import template…</option>
-              {WORKOUT_TEMPLATES.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.name}
-                </option>
-              ))}
-            </Select>
-          </div>
-        }
-      />
+    <div className="wo-page space-y-4">
+      <div className="wo-page__toolbar">
+        <div className="wo-page__intro wo-page__intro--desktop">
+          <SectionTitle
+            title="My Plans"
+            subtitle="Build day-wise programs, import templates, and set your active plan."
+          />
+        </div>
+        <div className="wo-page__actions">
+          <Button variant="primary" onClick={createBlank}>
+            New plan
+          </Button>
+          <Select
+            aria-label="Import template"
+            defaultValue=""
+            onChange={(e) => {
+              if (e.target.value) importTemplate(e.target.value);
+              e.target.value = "";
+            }}
+          >
+            <option value="">Import template…</option>
+            {WORKOUT_TEMPLATES.map((t) => (
+              <option key={t.id} value={t.id}>
+                {t.name}
+              </option>
+            ))}
+          </Select>
+        </div>
+      </div>
 
       <div className="wo-split-layout">
         <Panel className="wo-split-layout__aside h-fit">

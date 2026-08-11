@@ -389,6 +389,11 @@ html[data-api-theme="dark"] body {
   padding: 0.45rem 0.75rem;
   cursor: pointer;
   white-space: nowrap;
+  transition: transform 160ms ease-out;
+}
+
+.ac-btn:active {
+  transform: scale(0.97);
 }
 
 .ac-btn--sm {
@@ -791,6 +796,16 @@ html[data-api-theme="dark"] body {
   padding: 10vh 1rem 1rem;
   background: rgba(12, 10, 9, 0.55);
   backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ac-modal-root.is-active {
+  opacity: 1;
+}
+
+.ac-modal-root:not(.is-active) {
+  pointer-events: none;
 }
 
 .ac-modal {
@@ -800,6 +815,16 @@ html[data-api-theme="dark"] body {
   border-radius: 18px;
   box-shadow: var(--ac-shadow);
   overflow: hidden;
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ac-modal.is-active {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .ac-modal--wide {
@@ -982,5 +1007,15 @@ html[data-api-theme="dark"] body {
   .ac-btn,
   .ac-icon-btn {
     transition: none !important;
+  }
+
+  .ac-modal-root,
+  .ac-modal {
+    transition: opacity 120ms ease !important;
+    transform: none !important;
+  }
+
+  .ac-btn:active {
+    transform: none;
   }
 }

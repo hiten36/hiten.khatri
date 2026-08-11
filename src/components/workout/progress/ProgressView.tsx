@@ -116,13 +116,15 @@ export function ProgressView() {
   };
 
   return (
-    <div className="space-y-4">
-      <SectionTitle
-        title="Progress"
-        subtitle="Charts, PRs, measurements, calculators, reminders, and local backups."
-      />
+    <div className="wo-page space-y-4">
+      <div className="wo-page__intro wo-page__intro--desktop">
+        <SectionTitle
+          title="Progress"
+          subtitle="Charts, PRs, measurements, calculators, reminders, and local backups."
+        />
+      </div>
 
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="wo-stat-grid">
         <StatCard
           label="Completed"
           value={completed.length}

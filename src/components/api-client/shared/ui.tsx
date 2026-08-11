@@ -1,4 +1,5 @@
 import { cn } from "../../../utils/cn";
+import { usePresence } from "../../../utils/use-presence";
 import type {
   ButtonHTMLAttributes,
   InputHTMLAttributes,
@@ -97,11 +98,16 @@ export function Modal({
   onClose: () => void;
   wide?: boolean;
 }) {
-  if (!open) return null;
+  const { present, active } = usePresence(open, 220);
+  if (!present) return null;
   return (
-    <div className="ac-modal-root" role="presentation" onMouseDown={onClose}>
+    <div
+      className={cn("ac-modal-root", active && "is-active")}
+      role="presentation"
+      onMouseDown={onClose}
+    >
       <div
-        className={cn("ac-modal", wide && "ac-modal--wide")}
+        className={cn("ac-modal", wide && "ac-modal--wide", active && "is-active")}
         role="dialog"
         aria-modal="true"
         aria-label={title}

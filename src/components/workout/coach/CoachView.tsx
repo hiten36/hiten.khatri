@@ -105,11 +105,13 @@ export function CoachView() {
   };
 
   return (
-    <div className="space-y-4">
-      <SectionTitle
-        title="Coach"
-        subtitle="Answer a few questions and get an explainable plan recommendation."
-      />
+    <div className="wo-page space-y-4">
+      <div className="wo-page__intro wo-page__intro--desktop">
+        <SectionTitle
+          title="Coach"
+          subtitle="Answer a few questions and get an explainable plan recommendation."
+        />
+      </div>
 
       <Panel>
         <div className="grid gap-3 md:grid-cols-2">
@@ -258,13 +260,13 @@ export function CoachView() {
       </Panel>
 
       {submitted && top && topTemplate ? (
-        <Panel>
+        <Panel className="wo-coach-result">
           <SectionTitle
             title={`Recommended: ${topTemplate.name}`}
             subtitle={`Score ${top.score} · adapted to ${top.adaptedDaysPerWeek} days / ~${top.adaptedMinutes} min`}
           />
           <p className="mb-3 text-sm">{topTemplate.description}</p>
-          <div className="mb-3 flex flex-wrap gap-2">
+          <div className="mb-3 flex flex-wrap gap-2 wo-coach-result__reasons">
             {top.reasons.map((reason) => (
               <Badge key={reason}>{reason}</Badge>
             ))}

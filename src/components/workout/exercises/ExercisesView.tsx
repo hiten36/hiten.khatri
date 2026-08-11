@@ -4,6 +4,7 @@ import { getExerciseGifUrl } from "../../../data/exercise-gifs";
 import type { Difficulty, Equipment, MuscleGroup } from "../types";
 import { useWorkout } from "../state/WorkoutContext";
 import { cn } from "../../../utils/cn";
+import { usePresence } from "../../../utils/use-presence";
 import {
   Badge,
   Button,
@@ -27,12 +28,32 @@ export function ExercisesView() {
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [page, setPage] = useState(0);
   const [compareIds, setCompareIds] = useState<string[]>([]);
+  const [sheetMs, setSheetMs] = useState(() =>
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 1099px)").matches
+      ? 280
+      : 0,
+  );
 
   const selected =
     EXERCISES.find((e) => e.id === state.selectedExerciseId) ?? null;
+  const { present, active } = usePresence(!!selected, sheetMs);
+  const [display, setDisplay] = useState(selected);
 
   useEffect(() => {
-    if (!selected) return;
+    const mq = window.matchMedia("(max-width: 1099px)");
+    const sync = () => setSheetMs(mq.matches ? 280 : 0);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  useEffect(() => {
+    if (selected) setDisplay(selected);
+  }, [selected]);
+
+  useEffect(() => {
+    if (!present) return;
     const mq = window.matchMedia("(max-width: 1099px)");
     const prev = document.body.style.overflow;
     const syncOverflow = () => {
@@ -49,7 +70,7 @@ export function ExercisesView() {
       mq.removeEventListener("change", syncOverflow);
       window.removeEventListener("keydown", onKey);
     };
-  }, [selected, dispatch]);
+  }, [present, dispatch]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -83,11 +104,13 @@ export function ExercisesView() {
     .filter(Boolean);
 
   return (
-    <div className="space-y-4">
-      <SectionTitle
-        title="Exercise Catalogue"
-        subtitle={`${EXERCISES.length}+ movements with cues, substitutions, and form GIFs for every exercise.`}
-      />
+    <div className="wo-page space-y-4">
+      <div className="wo-page__intro wo-page__intro--desktop">
+        <SectionTitle
+          title="Exercise Catalogue"
+          subtitle={`${EXERCISES.length}+ movements with cues, substitutions, and form GIFs for every exercise.`}
+        />
+      </div>
 
       <Panel>
         <div className="wo-filters">
@@ -100,7 +123,8 @@ export function ExercisesView() {
                 setQuery(e.target.value);
                 setPage(0);
               }}
-              placeholder="Name, muscle, tag…"
+              placeholder="Search moves…"
+              enterKeyHint="search"
             />
           </div>
           <div>
@@ -249,7 +273,8 @@ export function ExercisesView() {
         <div
           className={cn(
             "wo-exercises-detail",
-            selected ? "is-open" : "is-empty",
+            present ? "is-open" : "is-empty",
+            active && "is-active",
           )}
         >
           <button
@@ -259,7 +284,8 @@ export function ExercisesView() {
             onClick={() => dispatch({ type: "CLEAR_EXERCISE" })}
           />
           <Panel className="wo-exercises-detail__panel">
-            {!selected ? (
+            <div className="wo-sheet-handle" aria-hidden />
+            {!display || (!selected && !present) ? (
               <div className="wo-exercises-detail__desktop-empty">
                 <EmptyState
                   title="Select an exercise"
@@ -276,9 +302,9 @@ export function ExercisesView() {
                     ← Back
                   </Button>
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-lg font-semibold sm:text-xl">{selected.name}</h3>
+                    <h3 className="text-lg font-semibold sm:text-xl">{display.name}</h3>
                     <p className="wo-muted text-sm capitalize">
-                      {selected.movementPattern} · {selected.equipment.join(", ")}
+                      {display.movementPattern} · {display.equipment.join(", ")}
                     </p>
                   </div>
                   <div className="flex flex-wrap gap-2">
@@ -286,20 +312,20 @@ export function ExercisesView() {
                       onClick={() =>
                         dispatch({
                           type: "TOGGLE_FAVORITE",
-                          exerciseId: selected.id,
+                          exerciseId: display.id,
                         })
                       }
                     >
-                      {state.store.favorites.includes(selected.id)
+                      {state.store.favorites.includes(display.id)
                         ? "Unfavorite"
                         : "Favorite"}
                     </Button>
                     <Button
                       onClick={() =>
                         setCompareIds((ids) =>
-                          ids.includes(selected.id)
+                          ids.includes(display.id)
                             ? ids
-                            : [...ids.slice(-1), selected.id],
+                            : [...ids.slice(-1), display.id],
                         )
                       }
                     >
@@ -308,13 +334,13 @@ export function ExercisesView() {
                   </div>
                 </div>
 
-                <ExerciseScene exercise={selected} />
+                <ExerciseScene exercise={display} />
 
                 <div className="grid gap-3 sm:grid-cols-2">
                   <div>
                     <h4 className="mb-1 font-semibold">Setup</h4>
                     <ul className="list-disc space-y-1 pl-5 text-sm">
-                      {selected.setup.map((s) => (
+                      {display.setup.map((s) => (
                         <li key={s}>{s}</li>
                       ))}
                     </ul>
@@ -322,7 +348,7 @@ export function ExercisesView() {
                   <div>
                     <h4 className="mb-1 font-semibold">Steps</h4>
                     <ol className="list-decimal space-y-1 pl-5 text-sm">
-                      {selected.steps.map((s) => (
+                      {display.steps.map((s) => (
                         <li key={s}>{s}</li>
                       ))}
                     </ol>
@@ -330,7 +356,7 @@ export function ExercisesView() {
                   <div>
                     <h4 className="mb-1 font-semibold">Form cues</h4>
                     <ul className="list-disc space-y-1 pl-5 text-sm">
-                      {selected.formCues.map((s) => (
+                      {display.formCues.map((s) => (
                         <li key={s}>{s}</li>
                       ))}
                     </ul>
@@ -338,7 +364,7 @@ export function ExercisesView() {
                   <div>
                     <h4 className="mb-1 font-semibold">Common mistakes</h4>
                     <ul className="list-disc space-y-1 pl-5 text-sm">
-                      {selected.commonMistakes.map((s) => (
+                      {display.commonMistakes.map((s) => (
                         <li key={s}>{s}</li>
                       ))}
                     </ul>
@@ -346,30 +372,30 @@ export function ExercisesView() {
                 </div>
 
                 <p className="text-sm">
-                  <strong>Breathing:</strong> {selected.breathing}
+                  <strong>Breathing:</strong> {display.breathing}
                 </p>
                 <p className="text-sm">
-                  <strong>Tempo:</strong> {selected.tempo}
+                  <strong>Tempo:</strong> {display.tempo}
                 </p>
 
                 <div className="flex flex-wrap gap-2">
-                  {selected.regressions.map((r) => (
+                  {display.regressions.map((r) => (
                     <Badge key={r}>Regression: {r}</Badge>
                   ))}
-                  {selected.progressions.map((p) => (
+                  {display.progressions.map((p) => (
                     <Badge key={p}>Progression: {p}</Badge>
                   ))}
                 </div>
 
                 <div>
                   <h4 className="mb-1 font-semibold">Substitutions</h4>
-                  <p className="text-sm">{selected.substitutions.join(" · ")}</p>
+                  <p className="text-sm">{display.substitutions.join(" · ")}</p>
                 </div>
 
                 <div>
                   <h4 className="mb-1 font-semibold">Safety</h4>
                   <ul className="list-disc space-y-1 pl-5 text-sm">
-                    {selected.safetyNotes.map((s) => (
+                    {display.safetyNotes.map((s) => (
                       <li key={s}>{s}</li>
                     ))}
                   </ul>

@@ -194,16 +194,18 @@ export function TodayView() {
   };
 
   return (
-    <div className="space-y-4">
-      <SectionTitle
-        title="Today"
-        subtitle="Log sets, run rest timers, and resume in-progress sessions after refresh."
-      />
+    <div className="wo-page space-y-4">
+      <div className="wo-page__intro wo-page__intro--desktop">
+        <SectionTitle
+          title="Today"
+          subtitle="Log sets, run rest timers, and resume in-progress sessions after refresh."
+        />
+      </div>
 
       {summary ? (
-        <Panel>
+        <Panel className="wo-session-summary">
           <p className="font-medium">{summary}</p>
-          <Button className="mt-3" onClick={() => setSummary(null)}>
+          <Button className="mt-3 w-full sm:w-auto" onClick={() => setSummary(null)}>
             Dismiss
           </Button>
         </Panel>
@@ -218,6 +220,7 @@ export function TodayView() {
               action={
                 <Button
                   variant="primary"
+                  className="w-full sm:w-auto"
                   onClick={() => {
                     const next = emptySession();
                     persist(next);
@@ -230,8 +233,8 @@ export function TodayView() {
             />
           ) : (
             <Panel>
-              <h3 className="mb-2 font-semibold">{plan.name}</h3>
-              <div className="grid gap-2 md:grid-cols-2">
+              <h3 className="mb-3 font-semibold">{plan.name}</h3>
+              <div className="wo-day-grid">
                 {plan.days
                   .slice()
                   .sort((a, b) => a.order - b.order)
@@ -239,11 +242,11 @@ export function TodayView() {
                     <button
                       key={day.id}
                       type="button"
-                      className="wo-list-row text-left"
+                      className="wo-day-card"
                       disabled={!!day.isRestDay}
                       onClick={() => startDay(day)}
                     >
-                      <div>
+                      <div className="min-w-0">
                         <div className="font-medium">{day.name}</div>
                         <div className="wo-muted text-xs">
                           {day.isRestDay
@@ -251,12 +254,14 @@ export function TodayView() {
                             : `${day.exercises.length} exercises`}
                         </div>
                       </div>
-                      <Badge>{day.isRestDay ? "Rest" : "Start"}</Badge>
+                      <span className="wo-day-card__cta">
+                        {day.isRestDay ? "Rest" : "Start"}
+                      </span>
                     </button>
                   ))}
               </div>
               <Button
-                className="mt-3"
+                className="mt-3 w-full sm:w-auto"
                 onClick={() => {
                   const next = emptySession();
                   persist(next);
@@ -270,64 +275,68 @@ export function TodayView() {
         </div>
       ) : (
         <>
-          <Panel>
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <div>
-                <h3 className="text-lg font-semibold">{session.name}</h3>
-                <p className="wo-muted text-sm">
-                  {session.status} · {formatMs(elapsed)}
-                </p>
+          <div className="wo-session-bar">
+            <div className="wo-session-bar__meta">
+              <h3 className="wo-session-bar__title">{session.name}</h3>
+              <p className="wo-session-bar__timer">
+                <span className="wo-session-bar__status">{session.status}</span>
+                <span aria-hidden>·</span>
+                <span className="wo-session-bar__clock">{formatMs(elapsed)}</span>
+              </p>
+            </div>
+            {restLeft > 0 ? (
+              <div className="wo-rest-pill" role="status">
+                Rest {restLeft}s
               </div>
-              <div className="flex flex-wrap gap-2">
-                {restLeft > 0 ? <Badge>Rest {restLeft}s</Badge> : null}
-                <Button
-                  onClick={() => {
-                    if (session.status === "paused") {
-                      persist({
-                        ...session,
-                        status: "in-progress",
-                        startedAt: Date.now(),
-                        pausedAt: null,
-                      });
-                    } else {
-                      persist({
-                        ...session,
-                        status: "paused",
-                        pausedAt: Date.now(),
-                        accumulatedMs: elapsed,
-                      });
-                    }
-                  }}
-                >
-                  {session.status === "paused" ? "Resume" : "Pause"}
-                </Button>
-                <Button
-                  onClick={() => setRestLeft(state.store.preferences.defaultRestSeconds)}
-                >
-                  Rest timer
-                </Button>
-                <Button variant="primary" onClick={finish}>
-                  Finish
-                </Button>
-                <Button
-                  variant="danger"
-                  onClick={() => {
-                    if (!confirm("Abandon this session?")) return;
+            ) : null}
+            <div className="wo-session-bar__actions">
+              <Button
+                onClick={() => {
+                  if (session.status === "paused") {
                     persist({
                       ...session,
-                      status: "abandoned",
-                      endedAt: Date.now(),
+                      status: "in-progress",
+                      startedAt: Date.now(),
+                      pausedAt: null,
+                    });
+                  } else {
+                    persist({
+                      ...session,
+                      status: "paused",
+                      pausedAt: Date.now(),
                       accumulatedMs: elapsed,
                     });
-                    dispatch({ type: "SET_ACTIVE_SESSION", sessionId: null });
-                    setSession(null);
-                  }}
-                >
-                  Abandon
-                </Button>
-              </div>
+                  }
+                }}
+              >
+                {session.status === "paused" ? "Resume" : "Pause"}
+              </Button>
+              <Button
+                onClick={() => setRestLeft(state.store.preferences.defaultRestSeconds)}
+              >
+                Rest
+              </Button>
+              <Button variant="primary" onClick={finish}>
+                Finish
+              </Button>
+              <Button
+                variant="danger"
+                onClick={() => {
+                  if (!confirm("Abandon this session?")) return;
+                  persist({
+                    ...session,
+                    status: "abandoned",
+                    endedAt: Date.now(),
+                    accumulatedMs: elapsed,
+                  });
+                  dispatch({ type: "SET_ACTIVE_SESSION", sessionId: null });
+                  setSession(null);
+                }}
+              >
+                Quit
+              </Button>
             </div>
-          </Panel>
+          </div>
 
           {session.exercises.map((exercise) => {
             const meta = EXERCISE_BY_ID[exercise.exerciseId];
@@ -341,28 +350,36 @@ export function TodayView() {
               8,
               state.store.preferences.loadIncrementKg,
             );
+            const doneCount = exercise.sets.filter((s) => s.completed).length;
             return (
-              <Panel key={exercise.id}>
-                <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
-                  <div>
-                    <h4 className="font-semibold">{meta?.name ?? exercise.exerciseId}</h4>
-                    {prev ? (
-                      <p className="wo-muted text-xs">
-                        Last:{" "}
-                        {prev.sets
-                          .filter((s) => s.completed)
-                          .map((s) => `${s.weight ?? 0}×${s.reps ?? 0}`)
-                          .join(", ") || "—"}
+              <Panel key={exercise.id} className="wo-exercise-log">
+                <div className="wo-exercise-log__head">
+                  <div className="min-w-0">
+                    <h4 className="font-semibold leading-snug">
+                      {meta?.name ?? exercise.exerciseId}
+                    </h4>
+                    <p className="wo-muted text-xs">
+                      {doneCount}/{exercise.sets.length} sets
+                      {prev
+                        ? ` · Last ${
+                            prev.sets
+                              .filter((s) => s.completed)
+                              .map((s) => `${s.weight ?? 0}×${s.reps ?? 0}`)
+                              .join(", ") || "—"
+                          }`
+                        : ""}
+                    </p>
+                    {suggestion ? (
+                      <p className="mt-1 text-xs text-[var(--wo-accent)]">
+                        {suggestion.note}
                       </p>
                     ) : null}
-                    {suggestion ? (
-                      <p className="text-xs text-orange-400">{suggestion.note}</p>
-                    ) : null}
                   </div>
-                  <div className="flex gap-2">
+                  <div className="wo-exercise-log__tools">
                     <Button
                       onClick={() => {
-                        const working = exercise.sets.find((s) => s.weight)?.weight ?? 40;
+                        const working =
+                          exercise.sets.find((s) => s.weight)?.weight ?? 40;
                         const warm = warmupSets(working);
                         persist({
                           ...session,
@@ -390,7 +407,7 @@ export function TodayView() {
                         });
                       }}
                     >
-                      Add warm-ups
+                      Warm-ups
                     </Button>
                     <Button
                       onClick={() =>
@@ -410,78 +427,85 @@ export function TodayView() {
                 </div>
 
                 {!exercise.skipped ? (
-                  <div className="space-y-2">
+                  <div className="space-y-3">
                     {exercise.sets.map((set, idx) => (
                       <div
                         key={set.id}
-                        className="wo-set-row wo-set-row--session"
+                        className={cnSet(set.completed)}
                       >
-                        <div className="wo-muted self-center text-xs">
-                          #{idx + 1} {set.type}
+                        <div className="wo-set-card__label">
+                          Set {idx + 1}
+                          <span className="wo-muted"> · {set.type}</span>
                         </div>
-                        <Input
-                          type="number"
-                          aria-label="Weight"
-                          value={set.weight ?? ""}
-                          onChange={(e) =>
-                            updateSet(exercise.id, set.id, {
-                              weight:
-                                e.target.value === ""
-                                  ? null
-                                  : Number(e.target.value),
-                            })
-                          }
-                          placeholder="Weight"
-                        />
-                        <Input
-                          type="number"
-                          aria-label="Reps"
-                          value={set.reps ?? ""}
-                          onChange={(e) =>
-                            updateSet(exercise.id, set.id, {
-                              reps:
-                                e.target.value === ""
-                                  ? null
-                                  : Number(e.target.value),
-                            })
-                          }
-                          placeholder="Reps"
-                        />
-                        {state.store.preferences.showRpe ? (
+                        <div className="wo-set-card__fields">
                           <Input
                             type="number"
-                            aria-label="RPE"
-                            value={set.rpe ?? ""}
+                            inputMode="decimal"
+                            aria-label="Weight"
+                            value={set.weight ?? ""}
                             onChange={(e) =>
                               updateSet(exercise.id, set.id, {
-                                rpe:
+                                weight:
                                   e.target.value === ""
                                     ? null
                                     : Number(e.target.value),
                               })
                             }
-                            placeholder="RPE"
+                            placeholder="kg"
                           />
-                        ) : (
-                          <div />
-                        )}
-                        <Button
-                          variant={set.completed ? "primary" : "secondary"}
-                          onClick={() => completeSet(exercise, set)}
-                        >
-                          {set.completed ? "Done" : "Complete"}
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          onClick={() =>
-                            updateSet(exercise.id, set.id, {
-                              skipped: true,
-                              completed: false,
-                            })
-                          }
-                        >
-                          Skip set
-                        </Button>
+                          <Input
+                            type="number"
+                            inputMode="numeric"
+                            aria-label="Reps"
+                            value={set.reps ?? ""}
+                            onChange={(e) =>
+                              updateSet(exercise.id, set.id, {
+                                reps:
+                                  e.target.value === ""
+                                    ? null
+                                    : Number(e.target.value),
+                              })
+                            }
+                            placeholder="reps"
+                          />
+                          {state.store.preferences.showRpe ? (
+                            <Input
+                              type="number"
+                              inputMode="decimal"
+                              aria-label="RPE"
+                              value={set.rpe ?? ""}
+                              onChange={(e) =>
+                                updateSet(exercise.id, set.id, {
+                                  rpe:
+                                    e.target.value === ""
+                                      ? null
+                                      : Number(e.target.value),
+                                })
+                              }
+                              placeholder="RPE"
+                            />
+                          ) : null}
+                        </div>
+                        <div className="wo-set-card__actions">
+                          <Button
+                            variant={set.completed ? "primary" : "secondary"}
+                            className="wo-set-card__complete"
+                            onClick={() => completeSet(exercise, set)}
+                          >
+                            {set.completed ? "Done ✓" : "Complete set"}
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            onClick={() =>
+                              updateSet(exercise.id, set.id, {
+                                skipped: true,
+                                completed: false,
+                              })
+                            }
+                          >
+                            Skip
+                          </Button>
+                        </div>
                       </div>
                     ))}
                     <Label htmlFor={`note-${exercise.id}`}>Notes</Label>
@@ -510,4 +534,8 @@ export function TodayView() {
       )}
     </div>
   );
+}
+
+function cnSet(completed: boolean) {
+  return `wo-set-card${completed ? " is-done" : ""}`;
 }

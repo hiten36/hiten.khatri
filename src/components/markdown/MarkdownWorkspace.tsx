@@ -12,6 +12,7 @@ import {
   PanelLeftOpen,
   Save,
   Search,
+  Sparkles,
   Sun,
   Trash2,
 } from "lucide-react";
@@ -44,6 +45,7 @@ import {
   setStoredMdTheme,
   type MdTheme,
 } from "../../utils/markdown-theme";
+import { AdvancedSearchDialog } from "./AdvancedSearchDialog";
 import "katex/dist/katex.min.css";
 
 const MD_PLUGINS = [
@@ -118,6 +120,8 @@ export default function MarkdownWorkspace() {
   const [notesQuery, setNotesQuery] = useState("");
   const [findQuery, setFindQuery] = useState("");
   const [findIndex, setFindIndex] = useState(0);
+  const [advancedOpen, setAdvancedOpen] = useState(false);
+  const [advancedSeed, setAdvancedSeed] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const editorRef = useRef<HTMLTextAreaElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
@@ -224,6 +228,76 @@ export default function MarkdownWorkspace() {
     },
     [content, findMatches, findQuery, viewMode],
   );
+
+  const openAdvancedSearch = useCallback((seed = "") => {
+    setAdvancedSeed(seed);
+    setAdvancedOpen(true);
+  }, []);
+
+  const jumpToOffset = useCallback(
+    (offset: number, length = 40) => {
+      setAdvancedOpen(false);
+      const editor = editorRef.current;
+      if (editor && (viewMode === "edit" || viewMode === "split")) {
+        const end = Math.min(content.length, offset + length);
+        editor.focus();
+        editor.setSelectionRange(offset, end);
+        const lineHeight = 22;
+        const before = content.slice(0, offset);
+        const line = before.split("\n").length - 1;
+        editor.scrollTop = Math.max(
+          0,
+          line * lineHeight - editor.clientHeight / 3,
+        );
+      }
+
+      // Align basic find highlight with jumped text when possible
+      const lineText = content.slice(offset, offset + 80).split("\n")[0] ?? "";
+      const snippet = lineText.replace(/^#+\s*/, "").slice(0, 48).trim();
+      if (snippet) {
+        setFindQuery(snippet.replace(/`/g, ""));
+      }
+
+      const preview = previewRef.current;
+      if (preview && (viewMode === "preview" || viewMode === "split")) {
+        const needle = content
+          .slice(offset, offset + 60)
+          .replace(/^#+\s*/, "")
+          .replace(/`/g, "")
+          .trim()
+          .slice(0, 40);
+        if (!needle) return;
+        const walker = document.createTreeWalker(
+          preview,
+          NodeFilter.SHOW_TEXT,
+        );
+        let node = walker.nextNode();
+        const needleLower = needle.toLowerCase();
+        while (node) {
+          const text = (node.textContent ?? "").toLowerCase();
+          if (text.includes(needleLower.slice(0, Math.min(24, needleLower.length)))) {
+            node.parentElement?.scrollIntoView({
+              block: "center",
+              behavior: "smooth",
+            });
+            break;
+          }
+          node = walker.nextNode();
+        }
+      }
+    },
+    [content, viewMode],
+  );
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (!(e.ctrlKey || e.metaKey) || e.key.toLowerCase() !== "k") return;
+      e.preventDefault();
+      openAdvancedSearch(findQuery.trim());
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [findQuery, openAdvancedSearch]);
 
   const refreshDocs = useCallback(() => {
     setDocs(listMarkdownDocs());
@@ -644,6 +718,31 @@ export default function MarkdownWorkspace() {
               </button>
             </div>
 
+            <button
+              type="button"
+              onClick={() => openAdvancedSearch(findQuery.trim())}
+              className="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1.5 text-xs font-semibold transition hover:border-[color-mix(in_srgb,var(--md-accent)_50%,transparent)]"
+              style={{
+                borderColor: "var(--md-border-strong)",
+                color: "var(--md-accent)",
+                background: "var(--md-accent-soft)",
+              }}
+              title="Advanced search (Ctrl+K)"
+              aria-label="Open advanced search"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              Advanced
+              <kbd
+                className="hidden rounded border px-1 py-0.5 text-[10px] font-medium sm:inline"
+                style={{
+                  borderColor: "var(--md-border)",
+                  color: "var(--md-text-soft)",
+                }}
+              >
+                ⌘K
+              </kbd>
+            </button>
+
             <div
               className="flex rounded-md border p-0.5 text-xs"
               style={{ borderColor: "var(--md-border-strong)" }}
@@ -789,6 +888,15 @@ export default function MarkdownWorkspace() {
           </div>
         </section>
       </div>
+
+      <AdvancedSearchDialog
+        open={advancedOpen}
+        markdown={content}
+        noteTitle={title}
+        initialQuery={advancedSeed}
+        onClose={() => setAdvancedOpen(false)}
+        onJumpTo={jumpToOffset}
+      />
     </div>
   );
 }
